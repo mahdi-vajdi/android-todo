@@ -2,9 +2,9 @@ package com.mahdivajdi.simpletodo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.mahdivajdi.simpletodo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,5 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
     }
 }
