@@ -1,6 +1,7 @@
 package com.mahdivajdi.simpletodo.data
 
 import com.mahdivajdi.simpletodo.data.model.LoggedInUser
+import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
 
 /**
  * Class that requests authentication and user information from the remote data source and
