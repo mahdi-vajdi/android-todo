@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
 import com.mahdivajdi.simpletodo.data.LoginRepository
+import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
@@ -16,7 +17,7 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(
                 loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
+                    dataSource = LoginDataSource(LoginServiceBuilder.retrofitService)
                 )
             ) as T
         }

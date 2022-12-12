@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
 import com.mahdivajdi.simpletodo.data.LoginRepository
+import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
 
 class MainViewModel(private val loginRepository: LoginRepository): ViewModel() {
 
@@ -18,7 +19,7 @@ class MainViewModelFactory : ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(
                 loginRepository = LoginRepository(
-                    dataSource = LoginDataSource()
+                    dataSource = LoginDataSource(LoginServiceBuilder.retrofitService)
                 )
             ) as T
         }

@@ -1,6 +1,7 @@
 package com.mahdivajdi.simpletodo.data
 
 import com.mahdivajdi.simpletodo.data.model.LoggedInUser
+import com.mahdivajdi.simpletodo.data.model.LoginUser
 import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
 
 /**
@@ -28,9 +29,9 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    suspend fun login(user: LoginUser): Result<LoggedInUser> {
         // handle login
-        val result = dataSource.login(username, password)
+        val result = dataSource.login(user)
 
         if (result is Result.Success) {
             setLoggedInUser(result.data)

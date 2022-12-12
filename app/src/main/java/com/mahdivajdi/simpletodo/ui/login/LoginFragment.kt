@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
+import com.mahdivajdi.simpletodo.data.model.LoginUser
 import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
 
 
@@ -90,8 +91,10 @@ class LoginFragment : Fragment() {
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(
-                    usernameEditText.text.toString(),
-                    passwordEditText.text.toString()
+                    LoginUser(
+                        usernameEditText.text.toString(),
+                        passwordEditText.text.toString()
+                    )
                 )
             }
             false
@@ -100,8 +103,10 @@ class LoginFragment : Fragment() {
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
             loginViewModel.login(
-                usernameEditText.text.toString(),
-                passwordEditText.text.toString()
+                LoginUser(
+                    usernameEditText.text.toString(),
+                    passwordEditText.text.toString()
+                )
             )
         }
     }
