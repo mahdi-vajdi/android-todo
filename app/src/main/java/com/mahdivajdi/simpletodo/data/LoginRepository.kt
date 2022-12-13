@@ -1,5 +1,6 @@
 package com.mahdivajdi.simpletodo.data
 
+import android.util.Log
 import com.mahdivajdi.simpletodo.data.model.LoggedInUser
 import com.mahdivajdi.simpletodo.data.model.LoginUser
 import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
@@ -34,7 +35,10 @@ class LoginRepository(val dataSource: LoginDataSource) {
         val result = dataSource.login(user)
 
         if (result is Result.Success) {
+            Log.d("LoginOp", "LoggedInUser data= ${result.data} ---  isLoggedIn= $isLoggedIn")
             setLoggedInUser(result.data)
+            Log.d("LoginOp", "rep user= $user")
+            Log.d("LoginOp", "isUserLoggedIn= $isLoggedIn")
         }
 
         return result

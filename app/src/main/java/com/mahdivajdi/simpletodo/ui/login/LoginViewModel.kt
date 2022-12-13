@@ -23,6 +23,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
+    val isUserLoggedIn: Boolean = loginRepository.isLoggedIn
+
     fun login(user: LoginUser) {
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
@@ -31,17 +33,14 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                     Log.d("LoginOp", "login success: $response")
                     _loginResult.value = LoginResult(LoggedInUserView(user.userName))
                 }
-                is Result.Error -> Log.d("LoginOp", "login error: $response")
+                is Result.Error -> {
+                    Log.d("LoginOp", "login error: $response")
+                    LoginResult(error = R.string.login_failed)
+                }
                 is Result.Exception -> Log.d("LoginOp", "login exception: $response")
             }
 
         }
-        /*if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }*/
     }
 
     fun loginDataChanged(username: String, password: String) {

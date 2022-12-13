@@ -8,7 +8,6 @@ import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
 
 class MainViewModel(private val loginRepository: LoginRepository): ViewModel() {
 
-    val userLoggedIn: Boolean = loginRepository.isLoggedIn
 
 }
 

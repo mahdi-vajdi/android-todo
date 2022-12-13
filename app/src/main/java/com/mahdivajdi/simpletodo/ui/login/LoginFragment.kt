@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.model.LoginUser
@@ -20,7 +21,9 @@ import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by activityViewModels {
+        LoginViewModelFactory()
+    }
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -31,13 +34,14 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        if (loginViewModel.isUserLoggedIn) {
+            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password
@@ -67,6 +71,7 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
+                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 }
             })
 
