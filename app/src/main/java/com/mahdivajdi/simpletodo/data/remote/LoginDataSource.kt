@@ -1,6 +1,6 @@
 package com.mahdivajdi.simpletodo.data.remote
 
-import com.mahdivajdi.simpletodo.data.Result
+import com.mahdivajdi.simpletodo.data.NetworkResult
 import com.mahdivajdi.simpletodo.data.handleNetworkResult
 import com.mahdivajdi.simpletodo.data.model.*
 import com.squareup.moshi.Moshi
@@ -60,7 +60,7 @@ object LoginServiceBuilder {
 
 class LoginDataSource(private val loginService: LoginService) {
 
-    suspend fun login(user: LoginUser): Result<LoggedInUser> =
+    suspend fun login(user: LoginUser): NetworkResult<LoggedInUser> =
         handleNetworkResult { loginService.login(user) }
 
 

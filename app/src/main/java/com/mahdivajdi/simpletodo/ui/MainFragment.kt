@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
+import com.mahdivajdi.simpletodo.data.UserPreferences
+import com.mahdivajdi.simpletodo.data.dataStore
 import com.mahdivajdi.simpletodo.databinding.FragmentMainBinding
 import com.mahdivajdi.simpletodo.ui.login.LoginViewModel
 import com.mahdivajdi.simpletodo.ui.login.LoginViewModelFactory
@@ -33,6 +36,14 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val userPreferences = UserPreferences(requireContext())
+        userPreferences.authToken.asLiveData().observe(viewLifecycleOwner) {
+            binding.username.text = it ?: "Token is null"
+        }
     }
 
     override fun onDestroy() {

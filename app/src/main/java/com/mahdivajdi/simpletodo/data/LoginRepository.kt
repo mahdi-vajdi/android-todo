@@ -30,11 +30,11 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    suspend fun login(user: LoginUser): Result<LoggedInUser> {
+    suspend fun login(user: LoginUser): NetworkResult<LoggedInUser> {
         // handle login
         val result = dataSource.login(user)
 
-        if (result is Result.Success) {
+        if (result is NetworkResult.Success) {
             Log.d("LoginOp", "LoggedInUser data= ${result.data} ---  isLoggedIn= $isLoggedIn")
             setLoggedInUser(result.data)
             Log.d("LoginOp", "rep user= $user")

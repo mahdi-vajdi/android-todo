@@ -1,17 +1,15 @@
 package com.mahdivajdi.simpletodo.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.LoginRepository
-import com.mahdivajdi.simpletodo.data.Result
+import com.mahdivajdi.simpletodo.data.NetworkResult
+import com.mahdivajdi.simpletodo.data.model.LoggedInUser
 import com.mahdivajdi.simpletodo.data.model.LoginUser
-import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
 import kotlinx.coroutines.launch
 
 
@@ -20,26 +18,26 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> = _loginResult
+    private val _loginResult = MutableLiveData<NetworkResult<LoggedInUser>>()
+    val loginResult: LiveData<NetworkResult<LoggedInUser>> = _loginResult
 
-    val isUserLoggedIn: Boolean = loginRepository.isLoggedIn
+    val isUserLoggedIn = loginRepository.isLoggedIn
 
     fun login(user: LoginUser) {
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
-            when (val response = loginRepository.login(user)) {
-                is Result.Success -> {
+            _loginResult.value = loginRepository.login(user)
+
+               /* is Result.Success -> {
                     Log.d("LoginOp", "login success: $response")
                     _loginResult.value = LoginResult(LoggedInUserView(user.userName))
+
                 }
                 is Result.Error -> {
                     Log.d("LoginOp", "login error: $response")
                     LoginResult(error = R.string.login_failed)
                 }
-                is Result.Exception -> Log.d("LoginOp", "login exception: $response")
-            }
-
+                is Result.Exception -> Log.d("LoginOp", "login exception: $response")*/
         }
     }
 

@@ -1,22 +1,26 @@
 package com.mahdivajdi.simpletodo.ui.login
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
+import com.mahdivajdi.simpletodo.data.NetworkResult
+import com.mahdivajdi.simpletodo.data.UserPreferences
 import com.mahdivajdi.simpletodo.data.model.LoginUser
 import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
+import kotlinx.coroutines.launch
 
 
 class LoginFragment : Fragment() {
@@ -28,6 +32,8 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var preferences: UserPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +43,7 @@ class LoginFragment : Fragment() {
         if (loginViewModel.isUserLoggedIn) {
             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
         }
+        preferences = UserPreferences(requireContext())
         return binding.root
     }
 
@@ -66,13 +73,30 @@ class LoginFragment : Fragment() {
             Observer { loginResult ->
                 loginResult ?: return@Observer
                 loadingProgressBar.visibility = View.GONE
-                loginResult.error?.let {
+                when (loginResult) {
+                    is NetworkResult.Success -> {
+                        Log.d("LoginOp", "login success: ${loginResult.data}")
+                        lifecycleScope.launch {
+                            preferences.saveAuthToken(loginResult.data.accessToken)
+                            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                        }
+                    }
+                    is NetworkResult.Error -> {
+                        Log.d("LoginOp", "login error:  ${loginResult.code} ${loginResult.message}")
+                        LoginResult(error = R.string.login_failed)
+                    }
+                    is NetworkResult.Exception ->{
+                        Log.d("LoginOp", "login exception: ${loginResult.e}")
+                    }
+                }
+
+              /*  loginResult.error?.let {
                     showLoginFailed(it)
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
-                }
+                }*/
             })
 
         val afterTextChangedListener = object : TextWatcher {
