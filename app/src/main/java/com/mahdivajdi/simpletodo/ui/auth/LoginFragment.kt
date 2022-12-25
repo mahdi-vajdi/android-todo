@@ -22,6 +22,7 @@ import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
 import com.mahdivajdi.simpletodo.data.remote.AuthServiceBuilder
 import com.mahdivajdi.simpletodo.data.remote.NetworkResult
 import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
+import com.mahdivajdi.simpletodo.data.remote.model.UserRemoteModel
 import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
 
 
@@ -98,7 +99,7 @@ class LoginFragment : Fragment() {
                     }
                     is NetworkResult.Error -> {
                         Log.d("LoginOp", "login error:  ${loginResult.code} ${loginResult.message}")
-                        LoginResult(error = R.string.login_failed)
+//                        LoginResult(error = R.string.login_failed)
                     }
                     is NetworkResult.Exception -> {
                         Log.d("LoginOp", "login exception: ${loginResult.e}")
@@ -155,8 +156,8 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome) + model.displayName
+    private fun updateUiWithUser(model: UserRemoteModel) {
+        val welcome = getString(R.string.welcome) + model.username
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()

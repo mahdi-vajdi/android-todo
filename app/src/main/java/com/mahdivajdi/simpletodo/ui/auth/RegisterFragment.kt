@@ -77,7 +77,7 @@ class RegisterFragment : Fragment() {
                 }
                 is NetworkResult.Error -> {
                     Log.d("LoginOp", "login error:  ${loginResult.code} ${loginResult.message}")
-                    LoginResult(error = R.string.login_failed)
+//                    LoginResult(error = R.string.login_failed)
                 }
                 is NetworkResult.Exception -> {
                     Log.d("LoginOp", "login exception: ${loginResult.e}")
