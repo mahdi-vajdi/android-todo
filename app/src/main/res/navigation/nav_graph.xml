@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_main"/>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.mahdivajdi.simpletodo.ui.login.LoginFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.auth.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.mahdivajdi.simpletodo.ui.login.RegisterFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.auth.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register">
         <action

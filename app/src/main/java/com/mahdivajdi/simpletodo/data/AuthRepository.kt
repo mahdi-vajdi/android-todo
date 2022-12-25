@@ -3,15 +3,15 @@ package com.mahdivajdi.simpletodo.data
 import com.mahdivajdi.simpletodo.data.remote.model.LoginApiResponseModel
 import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
 import com.mahdivajdi.simpletodo.data.remote.model.RegisterUserRequestModel
-import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
+import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
 
 /**
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(
-    private val dataSource: LoginDataSource,
+class AuthRepository(
+    private val dataSource: AuthDataSource,
     private val preferences: UserPreferences
     ) {
 

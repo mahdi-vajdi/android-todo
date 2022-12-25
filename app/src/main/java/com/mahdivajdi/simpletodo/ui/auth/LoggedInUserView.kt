@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui.login
+package com.mahdivajdi.simpletodo.ui.auth
 
 /**
  * User details post authentication that is exposed to the UI

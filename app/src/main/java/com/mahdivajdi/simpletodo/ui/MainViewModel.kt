@@ -2,9 +2,6 @@ package com.mahdivajdi.simpletodo.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
-import com.mahdivajdi.simpletodo.data.LoginRepository
-import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
 
 class MainViewModel(): ViewModel() {
 

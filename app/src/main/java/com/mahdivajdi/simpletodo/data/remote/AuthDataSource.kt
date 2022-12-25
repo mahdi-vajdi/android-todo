@@ -18,7 +18,7 @@ import retrofit2.http.POST
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 
-interface LoginService {
+interface AuthService {
 
 
     @POST("registration/")
@@ -42,7 +42,7 @@ interface LoginService {
 }
 
 
-object LoginServiceBuilder {
+object AuthServiceBuilder {
 
     private const val url = "http://10.0.2.2:8000/dj_rest/"
 
@@ -55,21 +55,21 @@ object LoginServiceBuilder {
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
-    val retrofitService: LoginService by lazy {
-        retrofit.create(LoginService::class.java)
+    val retrofitService: AuthService by lazy {
+        retrofit.create(AuthService::class.java)
     }
 }
 
-class LoginDataSource(private val loginService: LoginService) {
+class AuthDataSource(private val authService: AuthService) {
 
     suspend fun login(user: LoginUserRequestModel): NetworkResult<LoginApiResponseModel> {
         Log.d("LoginOp", "login data source: register: request= $user")
-        return handleNetworkResult { loginService.login(user) }
+        return handleNetworkResult { authService.login(user) }
     }
 
     suspend fun register(user: RegisterUserRequestModel): NetworkResult<LoginApiResponseModel> {
         Log.d("LoginOp", "login data source: register: request= $user")
-        return handleNetworkResult { loginService.register(user) }
+        return handleNetworkResult { authService.register(user) }
     }
 
 

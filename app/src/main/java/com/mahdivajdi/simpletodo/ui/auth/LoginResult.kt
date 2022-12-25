@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui.login
+package com.mahdivajdi.simpletodo.ui.auth
 
 /**
  * Authentication result : success (user details) or error message.

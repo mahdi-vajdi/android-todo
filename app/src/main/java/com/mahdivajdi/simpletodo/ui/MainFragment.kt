@@ -1,6 +1,5 @@
 package com.mahdivajdi.simpletodo.ui
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,23 +8,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
-import com.mahdivajdi.simpletodo.data.LoginRepository
+import com.mahdivajdi.simpletodo.data.AuthRepository
 import com.mahdivajdi.simpletodo.data.UserPreferences
-import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
-import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
+import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
+import com.mahdivajdi.simpletodo.data.remote.AuthServiceBuilder
 import com.mahdivajdi.simpletodo.databinding.FragmentMainBinding
-import com.mahdivajdi.simpletodo.ui.login.LoginViewModel
-import com.mahdivajdi.simpletodo.ui.login.LoginViewModelFactory
+import com.mahdivajdi.simpletodo.ui.auth.AuthViewModel
+import com.mahdivajdi.simpletodo.ui.auth.AuthViewModelFactory
 
 class MainFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory()
     }
-    private val loginViewModel: LoginViewModel by activityViewModels {
-        LoginViewModelFactory(
-            LoginRepository(
-                LoginDataSource(LoginServiceBuilder.retrofitService),
+    private val authViewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory(
+            AuthRepository(
+                AuthDataSource(AuthServiceBuilder.retrofitService),
                 UserPreferences(requireContext())
             )
         )

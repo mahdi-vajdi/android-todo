@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui.login
+package com.mahdivajdi.simpletodo.ui.auth
 
 /**
  * Data validation state of the login form.

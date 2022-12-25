@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui.login
+package com.mahdivajdi.simpletodo.ui.auth
 
 import android.os.Bundle
 import android.util.Log
@@ -8,27 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
-import com.mahdivajdi.simpletodo.data.LoginRepository
+import com.mahdivajdi.simpletodo.data.AuthRepository
 import com.mahdivajdi.simpletodo.data.NetworkResult
 import com.mahdivajdi.simpletodo.data.UserPreferences
-import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
-import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
+import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
+import com.mahdivajdi.simpletodo.data.remote.AuthServiceBuilder
 import com.mahdivajdi.simpletodo.data.remote.model.RegisterUserRequestModel
 import com.mahdivajdi.simpletodo.databinding.FragmentRegisterBinding
-import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
 
     private lateinit var preferences: UserPreferences
 
-    private val loginViewModel: LoginViewModel by activityViewModels {
-        LoginViewModelFactory(
-            LoginRepository(
-                LoginDataSource(LoginServiceBuilder.retrofitService),
+    private val authViewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory(
+            AuthRepository(
+                AuthDataSource(AuthServiceBuilder.retrofitService),
                 preferences
             )
         )
@@ -59,7 +56,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.buttonRegisterRegister.setOnClickListener {
-            loginViewModel.register(
+            authViewModel.register(
                 RegisterUserRequestModel(
                     userName = binding.edittextRegisterUsername.text.toString(),
                     password = binding.edittextRegisterPassword.text.toString(),
@@ -68,11 +65,11 @@ class RegisterFragment : Fragment() {
             )
         }
 
-        loginViewModel.user.observe(viewLifecycleOwner) { loginResult ->
+        authViewModel.user.observe(viewLifecycleOwner) { loginResult ->
             when (loginResult) {
                 is NetworkResult.Success -> {
                     Log.d("LoginOp", "login success: ${loginResult.data}")
-                    loginViewModel.saveAuthTokens(loginResult.data.refreshToken,
+                    authViewModel.saveAuthTokens(loginResult.data.refreshToken,
                         loginResult.data.accessToken)
 
                     view.findNavController()

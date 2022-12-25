@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui.login
+package com.mahdivajdi.simpletodo.ui.auth
 
 import androidx.lifecycle.Observer
 import androidx.annotation.StringRes
@@ -14,29 +14,25 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
-import com.mahdivajdi.simpletodo.data.LoginRepository
+import com.mahdivajdi.simpletodo.data.AuthRepository
 import com.mahdivajdi.simpletodo.data.NetworkResult
 import com.mahdivajdi.simpletodo.data.UserPreferences
-import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
-import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
+import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
+import com.mahdivajdi.simpletodo.data.remote.AuthServiceBuilder
 import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
 import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
-import kotlinx.coroutines.launch
 
 
 class LoginFragment : Fragment() {
 
     private lateinit var preferences: UserPreferences
 
-    private val loginViewModel: LoginViewModel by activityViewModels {
-        LoginViewModelFactory(
-            LoginRepository(
-                LoginDataSource(LoginServiceBuilder.retrofitService),
+    private val authViewModel: AuthViewModel by activityViewModels {
+        AuthViewModelFactory(
+            AuthRepository(
+                AuthDataSource(AuthServiceBuilder.retrofitService),
                 preferences
             )
         )
@@ -75,7 +71,7 @@ class LoginFragment : Fragment() {
                 .navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
-        loginViewModel.loginFormState.observe(viewLifecycleOwner,
+        authViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
                 if (loginFormState == null) {
                     return@Observer
@@ -89,14 +85,14 @@ class LoginFragment : Fragment() {
                 }
             })
 
-        loginViewModel.user.observe(viewLifecycleOwner,
+        authViewModel.user.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
                 loadingProgressBar.visibility = View.GONE
                 when (loginResult) {
                     is NetworkResult.Success -> {
                         Log.d("LoginOp", "login success: ${loginResult.data}")
-                        loginViewModel.saveAuthTokens(loginResult.data.refreshToken, loginResult.data.accessToken)
+                        authViewModel.saveAuthTokens(loginResult.data.refreshToken, loginResult.data.accessToken)
                         val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
                         view.findNavController().navigate(action)
                     }
@@ -128,7 +124,7 @@ class LoginFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                loginViewModel.loginDataChanged(
+                authViewModel.loginDataChanged(
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
                 )
@@ -138,7 +134,7 @@ class LoginFragment : Fragment() {
         passwordEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(
+                authViewModel.login(
                     LoginUserRequestModel(
                         usernameEditText.text.toString(),
                         passwordEditText.text.toString()
@@ -150,7 +146,7 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(
+            authViewModel.login(
                 LoginUserRequestModel(
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
