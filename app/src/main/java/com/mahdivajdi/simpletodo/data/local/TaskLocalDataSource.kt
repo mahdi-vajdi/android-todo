@@ -2,6 +2,7 @@ package com.mahdivajdi.simpletodo.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
 import kotlinx.coroutines.flow.Flow
 
 
@@ -26,20 +27,20 @@ interface TaskDao {
     fun getTasks(): Flow<List<TaskLocalModel>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE id = :id")
-    fun getTask(id: Int): LiveData<TaskLocalModel>
+    fun getTask(id: Int): Flow<TaskLocalModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTask(TaskLocalModel: TaskLocalModel): Long
+    suspend fun insertTask(taskLocalModel: TaskLocalModel): Long
 
     @Update
-    suspend fun updateTask(TaskLocalModel: TaskLocalModel)
+    suspend fun updateTask(taskLocalModel: TaskLocalModel)
 
     @Delete
-    suspend fun deleteTask(TaskLocalModel: TaskLocalModel)
+    suspend fun deleteTask(taskLocalModel: TaskLocalModel)
     
 }
 
-fun TaskLocalModel.toDomainModel() = TaskLocalModel(
+fun TaskLocalModel.toDomainModel() = TaskDomainModel(
     id = this.id,
     title = this.title,
     description = this.description,
