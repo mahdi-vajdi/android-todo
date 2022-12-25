@@ -13,26 +13,37 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.mahdivajdi.simpletodo.R
+import com.mahdivajdi.simpletodo.data.LoginRepository
 import com.mahdivajdi.simpletodo.data.NetworkResult
 import com.mahdivajdi.simpletodo.data.UserPreferences
-import com.mahdivajdi.simpletodo.data.model.LoginUser
+import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
+import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
+import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
 import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
 
 class LoginFragment : Fragment() {
 
+    private lateinit var preferences: UserPreferences
+
     private val loginViewModel: LoginViewModel by activityViewModels {
-        LoginViewModelFactory()
+        LoginViewModelFactory(
+            LoginRepository(
+                LoginDataSource(LoginServiceBuilder.retrofitService),
+                preferences
+            )
+        )
     }
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var preferences: UserPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,9 +51,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        if (loginViewModel.isUserLoggedIn) {
-            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
-        }
         preferences = UserPreferences(requireContext())
         return binding.root
     }
@@ -50,10 +58,22 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val usernameEditText = binding.username
-        val passwordEditText = binding.password
-        val loginButton = binding.login
-        val loadingProgressBar = binding.loading
+        val usernameEditText = binding.edittextUsername
+        val passwordEditText = binding.edittextPassword
+        val loginButton = binding.buttonLogin
+        val loadingProgressBar = binding.progressbarLoading
+
+        preferences.refreshToken.asLiveData().observe(viewLifecycleOwner) {
+            if (it != null && it.isNotEmpty()) {
+                view.findNavController()
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment())
+            }
+        }
+
+        binding.buttonRegister.setOnClickListener {
+            view.findNavController()
+                .navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
+        }
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -69,34 +89,33 @@ class LoginFragment : Fragment() {
                 }
             })
 
-        loginViewModel.loginResult.observe(viewLifecycleOwner,
+        loginViewModel.user.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
                 loadingProgressBar.visibility = View.GONE
                 when (loginResult) {
                     is NetworkResult.Success -> {
                         Log.d("LoginOp", "login success: ${loginResult.data}")
-                        lifecycleScope.launch {
-                            preferences.saveAuthToken(loginResult.data.accessToken)
-                            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
-                        }
+                        loginViewModel.saveAuthTokens(loginResult.data.refreshToken, loginResult.data.accessToken)
+                        val action = LoginFragmentDirections.actionLoginFragmentToMainFragment()
+                        view.findNavController().navigate(action)
                     }
                     is NetworkResult.Error -> {
                         Log.d("LoginOp", "login error:  ${loginResult.code} ${loginResult.message}")
                         LoginResult(error = R.string.login_failed)
                     }
-                    is NetworkResult.Exception ->{
+                    is NetworkResult.Exception -> {
                         Log.d("LoginOp", "login exception: ${loginResult.e}")
                     }
                 }
 
-              /*  loginResult.error?.let {
-                    showLoginFailed(it)
-                }
-                loginResult.success?.let {
-                    updateUiWithUser(it)
-                    findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
-                }*/
+                /*  loginResult.error?.let {
+                      showLoginFailed(it)
+                  }
+                  loginResult.success?.let {
+                      updateUiWithUser(it)
+                      findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+                  }*/
             })
 
         val afterTextChangedListener = object : TextWatcher {
@@ -120,7 +139,7 @@ class LoginFragment : Fragment() {
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(
-                    LoginUser(
+                    LoginUserRequestModel(
                         usernameEditText.text.toString(),
                         passwordEditText.text.toString()
                     )
@@ -132,7 +151,7 @@ class LoginFragment : Fragment() {
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
             loginViewModel.login(
-                LoginUser(
+                LoginUserRequestModel(
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
                 )

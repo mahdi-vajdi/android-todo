@@ -1,8 +1,8 @@
 package com.mahdivajdi.simpletodo.data
 
-import android.util.Log
-import com.mahdivajdi.simpletodo.data.model.LoggedInUser
-import com.mahdivajdi.simpletodo.data.model.LoginUser
+import com.mahdivajdi.simpletodo.data.remote.model.LoginApiResponseModel
+import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
+import com.mahdivajdi.simpletodo.data.remote.model.RegisterUserRequestModel
 import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
 
 /**
@@ -10,43 +10,19 @@ import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-class LoginRepository(val dataSource: LoginDataSource) {
+class LoginRepository(
+    private val dataSource: LoginDataSource,
+    private val preferences: UserPreferences
+    ) {
 
-    // in-memory cache of the loggedInUser object
-    var user: LoggedInUser? = null
-        private set
+    suspend fun login(user: LoginUserRequestModel): NetworkResult<LoginApiResponseModel> = dataSource.login(user)
 
-    val isLoggedIn: Boolean
-        get() = user != null
+    suspend fun register(user: RegisterUserRequestModel): NetworkResult<LoginApiResponseModel> =
+        dataSource.register(user)
 
-    init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-        user = null
+    suspend fun saveAuthTokens(refreshToken: String, accessToken: String) {
+        preferences.saveRefreshToken(refreshToken)
+        preferences.saveAccessToken(accessToken)
     }
 
-    fun logout() {
-        user = null
-        dataSource.logout()
-    }
-
-    suspend fun login(user: LoginUser): NetworkResult<LoggedInUser> {
-        // handle login
-        val result = dataSource.login(user)
-
-        if (result is NetworkResult.Success) {
-            Log.d("LoginOp", "LoggedInUser data= ${result.data} ---  isLoggedIn= $isLoggedIn")
-            setLoggedInUser(result.data)
-            Log.d("LoginOp", "rep user= $user")
-            Log.d("LoginOp", "isUserLoggedIn= $isLoggedIn")
-        }
-
-        return result
-    }
-
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-    }
 }

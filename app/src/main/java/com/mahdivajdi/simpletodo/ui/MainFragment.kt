@@ -1,7 +1,7 @@
 package com.mahdivajdi.simpletodo.ui
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
-import androidx.navigation.fragment.findNavController
-import com.mahdivajdi.simpletodo.R
+import com.mahdivajdi.simpletodo.data.LoginRepository
 import com.mahdivajdi.simpletodo.data.UserPreferences
-import com.mahdivajdi.simpletodo.data.dataStore
+import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
+import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
 import com.mahdivajdi.simpletodo.databinding.FragmentMainBinding
 import com.mahdivajdi.simpletodo.ui.login.LoginViewModel
 import com.mahdivajdi.simpletodo.ui.login.LoginViewModelFactory
@@ -23,7 +23,12 @@ class MainFragment : Fragment() {
         MainViewModelFactory()
     }
     private val loginViewModel: LoginViewModel by activityViewModels {
-        LoginViewModelFactory()
+        LoginViewModelFactory(
+            LoginRepository(
+                LoginDataSource(LoginServiceBuilder.retrofitService),
+                UserPreferences(requireContext())
+            )
+        )
     }
 
     private var _binding: FragmentMainBinding? = null
@@ -41,8 +46,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val userPreferences = UserPreferences(requireContext())
-        userPreferences.authToken.asLiveData().observe(viewLifecycleOwner) {
-            binding.username.text = it ?: "Token is null"
+        userPreferences.refreshToken.asLiveData().observe(viewLifecycleOwner) {
+            binding.edittextUsername.text = it ?: "Token is null"
         }
     }
 

@@ -2,7 +2,6 @@ package com.mahdivajdi.simpletodo.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -14,20 +13,32 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "au
 
 class UserPreferences(private val context: Context) {
 
-    val authToken: Flow<String?>
+    val refreshToken: Flow<String?>
         get() = context.dataStore.data
             .map { preferences ->
-                preferences[KEY_AUTH]
+                preferences[REFRESH_TOKEN]
             }
 
-    suspend fun saveAuthToken(token: String) {
-        context.dataStore.edit { preferences ->
-            preferences[KEY_AUTH] = token
+    val accessToken: Flow<String?>
+        get() = context.dataStore.data
+            .map { preferences ->
+                preferences[ACCESS_TOKEN]
+            }
 
+    suspend fun saveRefreshToken(token: String) {
+        context.dataStore.edit { preferences ->
+            preferences[REFRESH_TOKEN] = token
+        }
+    }
+
+    suspend fun saveAccessToken(token: String) {
+        context.dataStore.edit { preferences ->
+            preferences[ACCESS_TOKEN] = token
         }
     }
 
     companion object {
-        private val KEY_AUTH = stringPreferencesKey(name = "token")
+        private val REFRESH_TOKEN = stringPreferencesKey(name = "refresh_token")
+        private val ACCESS_TOKEN = stringPreferencesKey(name = "access_token")
     }
 }

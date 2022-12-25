@@ -1,8 +1,9 @@
 package com.mahdivajdi.simpletodo.data.remote
 
+import android.util.Log
 import com.mahdivajdi.simpletodo.data.NetworkResult
 import com.mahdivajdi.simpletodo.data.handleNetworkResult
-import com.mahdivajdi.simpletodo.data.model.*
+import com.mahdivajdi.simpletodo.data.remote.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.json.JSONObject
@@ -19,23 +20,24 @@ import retrofit2.http.POST
 
 interface LoginService {
 
+
     @POST("registration/")
-    suspend fun register(@Body user: RegisterUser): Response<LoggedInUser>
+    suspend fun register(@Body user: RegisterUserRequestModel): Response<LoginApiResponseModel>
 
     @POST("login/")
-    suspend fun login(@Body user: LoginUser): Response<LoggedInUser>
+    suspend fun login(@Body user: LoginUserRequestModel): Response<LoginApiResponseModel>
 
     @POST("logout/")
     suspend fun logout(): Response<JSONObject>
 
     @GET("user/")
-    suspend fun getUser(): Response<User>
+    suspend fun getUser(): Response<UserRemoteModel>
 
     @POST("token/verify/")
-    suspend fun verifyToken(token: AccessToken): Response<JSONObject>
+    suspend fun verifyToken(token: AccessTokenRequestModel): Response<JSONObject>
 
     @GET("token/verify/")
-    suspend fun refreshToken(token: RefreshToken): Response<JSONObject>
+    suspend fun refreshToken(token: RefreshTokenRequestModel): Response<JSONObject>
 
 }
 
@@ -60,8 +62,15 @@ object LoginServiceBuilder {
 
 class LoginDataSource(private val loginService: LoginService) {
 
-    suspend fun login(user: LoginUser): NetworkResult<LoggedInUser> =
-        handleNetworkResult { loginService.login(user) }
+    suspend fun login(user: LoginUserRequestModel): NetworkResult<LoginApiResponseModel> {
+        Log.d("LoginOp", "login data source: register: request= $user")
+        return handleNetworkResult { loginService.login(user) }
+    }
+
+    suspend fun register(user: RegisterUserRequestModel): NetworkResult<LoginApiResponseModel> {
+        Log.d("LoginOp", "login data source: register: request= $user")
+        return handleNetworkResult { loginService.register(user) }
+    }
 
 
     fun logout() {

@@ -1,44 +1,43 @@
 package com.mahdivajdi.simpletodo.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.LoginRepository
 import com.mahdivajdi.simpletodo.data.NetworkResult
-import com.mahdivajdi.simpletodo.data.model.LoggedInUser
-import com.mahdivajdi.simpletodo.data.model.LoginUser
+import com.mahdivajdi.simpletodo.data.UserPreferences
+import com.mahdivajdi.simpletodo.data.remote.model.LoginApiResponseModel
+import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
+import com.mahdivajdi.simpletodo.data.remote.model.RegisterUserRequestModel
+import com.mahdivajdi.simpletodo.data.remote.LoginDataSource
+import com.mahdivajdi.simpletodo.data.remote.LoginServiceBuilder
 import kotlinx.coroutines.launch
 
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(
+    private val loginRepository: LoginRepository,
+) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    private val _loginResult = MutableLiveData<NetworkResult<LoggedInUser>>()
-    val loginResult: LiveData<NetworkResult<LoggedInUser>> = _loginResult
+    private val _user = MutableLiveData<NetworkResult<LoginApiResponseModel>>()
+    val user: LiveData<NetworkResult<LoginApiResponseModel>> = _user
 
-    val isUserLoggedIn = loginRepository.isLoggedIn
-
-    fun login(user: LoginUser) {
-        // can be launched in a separate asynchronous job
+    fun login(user: LoginUserRequestModel) {
         viewModelScope.launch {
-            _loginResult.value = loginRepository.login(user)
-
-               /* is Result.Success -> {
-                    Log.d("LoginOp", "login success: $response")
-                    _loginResult.value = LoginResult(LoggedInUserView(user.userName))
-
-                }
-                is Result.Error -> {
-                    Log.d("LoginOp", "login error: $response")
-                    LoginResult(error = R.string.login_failed)
-                }
-                is Result.Exception -> Log.d("LoginOp", "login exception: $response")*/
+            _user.value = loginRepository.login(user)
         }
+    }
+
+    fun register(user: RegisterUserRequestModel) {
+        viewModelScope.launch {
+            _user.value = loginRepository.register(user)
+        }
+    }
+
+    fun saveAuthTokens(refreshToken: String, accessToken: String) = viewModelScope.launch {
+        loginRepository.saveAuthTokens(refreshToken, accessToken)
     }
 
     fun loginDataChanged(username: String, password: String) {
@@ -63,5 +62,21 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+}
+
+
+class LoginViewModelFactory(
+    private val loginRepository: LoginRepository,
+) : ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(
+                loginRepository
+            ) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
