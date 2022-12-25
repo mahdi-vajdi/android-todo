@@ -17,10 +17,10 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.findNavController
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.AuthRepository
-import com.mahdivajdi.simpletodo.data.NetworkResult
-import com.mahdivajdi.simpletodo.data.UserPreferences
+import com.mahdivajdi.simpletodo.data.local.UserPreferences
 import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
 import com.mahdivajdi.simpletodo.data.remote.AuthServiceBuilder
+import com.mahdivajdi.simpletodo.data.remote.NetworkResult
 import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
 import com.mahdivajdi.simpletodo.databinding.FragmentLoginBinding
 

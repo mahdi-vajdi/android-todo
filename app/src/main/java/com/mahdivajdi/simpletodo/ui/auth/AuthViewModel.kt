@@ -4,7 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.*
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.AuthRepository
-import com.mahdivajdi.simpletodo.data.NetworkResult
+import com.mahdivajdi.simpletodo.data.remote.NetworkResult
 import com.mahdivajdi.simpletodo.data.remote.model.LoginApiResponseModel
 import com.mahdivajdi.simpletodo.data.remote.model.LoginUserRequestModel
 import com.mahdivajdi.simpletodo.data.remote.model.RegisterUserRequestModel

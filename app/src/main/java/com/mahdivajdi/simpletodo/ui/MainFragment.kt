@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.mahdivajdi.simpletodo.data.AuthRepository
-import com.mahdivajdi.simpletodo.data.UserPreferences
+import com.mahdivajdi.simpletodo.data.local.UserPreferences
 import com.mahdivajdi.simpletodo.data.remote.AuthDataSource
 import com.mahdivajdi.simpletodo.data.remote.AuthServiceBuilder
 import com.mahdivajdi.simpletodo.databinding.FragmentMainBinding

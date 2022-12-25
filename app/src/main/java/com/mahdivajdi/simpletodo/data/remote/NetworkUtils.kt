@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.data
+package com.mahdivajdi.simpletodo.data.remote
 
 import android.util.Log
 import retrofit2.HttpException

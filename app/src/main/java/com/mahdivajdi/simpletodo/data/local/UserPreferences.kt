@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.data
+package com.mahdivajdi.simpletodo.data.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore

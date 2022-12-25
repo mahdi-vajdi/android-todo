@@ -1,8 +1,6 @@
 package com.mahdivajdi.simpletodo.data.remote
 
 import android.util.Log
-import com.mahdivajdi.simpletodo.data.NetworkResult
-import com.mahdivajdi.simpletodo.data.handleNetworkResult
 import com.mahdivajdi.simpletodo.data.remote.model.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
