@@ -3,12 +3,12 @@ package com.mahdivajdi.simpletodo.domain.model
 import com.mahdivajdi.simpletodo.data.local.TaskLocalModel
 
 data class TaskDomainModel(
-    val id: Int,
+    val id: Int = 0,
     val title: String,
     val description: String,
     val timestamp: Long,
-    val done: Boolean,
-    val tags: List<String>,
+    val done: Boolean = false,
+    val tag: String?,
 )
 
 fun TaskDomainModel.toLocalModel() = TaskLocalModel(
@@ -17,5 +17,5 @@ fun TaskDomainModel.toLocalModel() = TaskLocalModel(
     description = this.description,
     timestamp = this.timestamp,
     done = this.done,
-    tags = this.tags,
+    tag = this.tag,
 )

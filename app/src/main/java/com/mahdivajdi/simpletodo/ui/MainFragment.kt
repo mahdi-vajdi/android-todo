@@ -1,10 +1,12 @@
 package com.mahdivajdi.simpletodo.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.mahdivajdi.simpletodo.data.TaskRepository
 import com.mahdivajdi.simpletodo.data.local.AppDatabase
@@ -41,13 +43,17 @@ class MainFragment : Fragment() {
 
         // Initiate recyclerview
         taskListAdapter = TaskListAdapter()
-        binding.RecyclerViewMain.adapter = taskListAdapter
+        binding.recyclerViewMain.adapter = taskListAdapter
         taskViewModel.getTasks().observe(viewLifecycleOwner) {
             taskListAdapter.submitList(it)
         }
 
         binding.fabMainAdd.setOnClickListener {
-            // TODO: implement adding task dialog
+            val addTaskFragment = AddTaskFragment {
+                Log.i("task", "onViewCreated: newTask= $it")
+                taskViewModel.insertTask(it)
+            }
+            addTaskFragment.show(parentFragmentManager, "add_task")
         }
     }
 

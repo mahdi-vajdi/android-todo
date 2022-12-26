@@ -31,7 +31,7 @@ class TaskListAdapter : ListAdapter<TaskDomainModel, TaskListAdapter.TaskViewHol
                 textViewTasksTimestamp.text = task.timestamp.toString()
                 textViewTasksDescription.text = task.description
                 textViewTasksDone.text = task.done.toString()
-                textViewTasksTags.text = task.tags.toString()
+                textViewTasksTags.text = task.tag.toString()
             }
         }
 

@@ -1,6 +1,5 @@
 package com.mahdivajdi.simpletodo.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
 import kotlinx.coroutines.flow.Flow
@@ -11,12 +10,12 @@ private const val TABLE_NAME = "task_table"
 @Entity(tableName = TABLE_NAME)
 data class TaskLocalModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val title: String,
     val description: String,
     val timestamp: Long,
     val done: Boolean,
-    val tags: List<String>,
+    val tag: String?,
 )
 
 
@@ -46,6 +45,6 @@ fun TaskLocalModel.toDomainModel() = TaskDomainModel(
     description = this.description,
     timestamp = this.timestamp,
     done = this.done,
-    tags = this.tags,
+    tag = this.tag,
 )
 
