@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView_tasks_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/textView_tasks_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/textView_tasks_title"
+            app:layout_constraintTop_toTopOf="@+id/textView_tasks_id"
+            tools:text="2022/12/25 22:30" />
+
+        <TextView
+            android:id="@+id/textView_tasks_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/textView_tasks_id"
+            app:layout_constraintTop_toTopOf="@+id/textView_tasks_id"
+            tools:text="Do laundry" />
+
+        <TextView
+            android:id="@+id/textView_tasks_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/textView_tasks_id"
+            app:layout_constraintTop_toBottomOf="@+id/textView_tasks_id"
+            tools:text="Do laundry at 10:30" />
+
+        <TextView
+            android:id="@+id/textView_tasks_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView_tasks_id"
+            app:layout_constraintTop_toBottomOf="@+id/textView_tasks_description"
+            tools:text="true" />
+
+        <TextView
+            android:id="@+id/textView_tasks_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView_tasks_done"
+            app:layout_constraintTop_toBottomOf="@+id/textView_tasks_description"
+            tools:text="personal, chores" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
