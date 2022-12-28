@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.TaskRepository
 import com.mahdivajdi.simpletodo.data.local.AppDatabase
@@ -22,7 +23,7 @@ class EditTaskFragment : Fragment() {
     private val taskViewModel: TaskViewModel by activityViewModels {
         TaskViewModelFactory(
             TaskRepository(
-                AppDatabase.getDatabase(requireContext()).taskDao()
+                (activity?.application as App).database.taskDao()
             )
         )
     }

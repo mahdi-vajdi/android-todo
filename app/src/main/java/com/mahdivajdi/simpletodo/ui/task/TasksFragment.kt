@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.TaskRepository
-import com.mahdivajdi.simpletodo.data.local.AppDatabase
 import com.mahdivajdi.simpletodo.databinding.FragmentTasksBinding
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
 import com.mahdivajdi.simpletodo.ui.adapter.TaskListAdapter
 
 
@@ -22,7 +20,7 @@ class TasksFragment : Fragment() {
     private val taskViewModel: TaskViewModel by activityViewModels {
        TaskViewModelFactory(
            TaskRepository(
-               AppDatabase.getDatabase(requireContext()).taskDao()
+               (activity?.application as App).database.taskDao()
            )
        )
     }
