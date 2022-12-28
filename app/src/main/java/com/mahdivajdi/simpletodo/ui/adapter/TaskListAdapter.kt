@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahdivajdi.simpletodo.databinding.ListItemTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
 
-class TaskListAdapter : ListAdapter<TaskDomainModel, TaskListAdapter.TaskViewHolder>(DiffCallback) {
+class TaskListAdapter(private val onItemClicked: (Int) -> Unit) :
+    ListAdapter<TaskDomainModel, TaskListAdapter.TaskViewHolder>(DiffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -18,21 +19,24 @@ class TaskListAdapter : ListAdapter<TaskDomainModel, TaskListAdapter.TaskViewHol
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClicked)
     }
 
-    class TaskViewHolder(private val binding: ListItemTaskBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class TaskViewHolder(
+        private val binding: ListItemTaskBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task: TaskDomainModel) {
+
+        fun bind(task: TaskDomainModel, onItemClicked: (Int) -> Unit) {
             binding.apply {
-                textViewTasksId.text = task.id.toString()
-                textViewTasksTitle.text = task.title
-                textViewTasksTimestamp.text = task.timestamp.toString()
-                textViewTasksDescription.text = task.description
-                textViewTasksDone.text = task.done.toString()
-                textViewTasksTags.text = task.tag.toString()
+                textViewTaskItemId.text = task.id.toString()
+                textViewTaskItemTitle.text = task.title
+                textViewTaskItemTimestamp.text = task.timestamp.toString()
+                textViewTaskItemDescription.text = task.description
+                textViewTaskItemDone.text = task.done.toString()
+                textViewTaskItemTags.text = task.tag.toString()
             }
+            itemView.setOnClickListener { onItemClicked(task.id) }
         }
 
     }

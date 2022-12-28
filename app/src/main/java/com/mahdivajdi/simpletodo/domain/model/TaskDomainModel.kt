@@ -4,11 +4,11 @@ import com.mahdivajdi.simpletodo.data.local.TaskLocalModel
 
 data class TaskDomainModel(
     val id: Int = 0,
-    val title: String,
-    val description: String,
+    var title: String,
+    var description: String,
     val timestamp: Long,
-    val done: Boolean = false,
-    val tag: String?,
+    var done: Boolean = false,
+    var tag: String?,
 )
 
 fun TaskDomainModel.toLocalModel() = TaskLocalModel(

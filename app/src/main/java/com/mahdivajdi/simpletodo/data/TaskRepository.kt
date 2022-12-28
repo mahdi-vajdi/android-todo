@@ -18,7 +18,9 @@ class TaskRepository(private val taskLocalSource: TaskDao) {
         }
 
     fun getTask(id: Int) =
-        taskLocalSource.getTask(id)
+        taskLocalSource.getTask(id).map {
+           it.toDomainModel()
+        }
 
     suspend fun insertTask(task: TaskDomainModel) =
         taskLocalSource.insertTask(task.toLocalModel())

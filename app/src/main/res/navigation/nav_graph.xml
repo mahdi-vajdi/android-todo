@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
-
+    app:startDestination="@id/tasksFragment">
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.mahdivajdi.simpletodo.ui.MainFragment"
-        android:label="ToDo"
-        tools:layout="@layout/fragment_main"/>
+        android:id="@+id/tasksFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.TasksFragment"
+        android:label="TasksFragment"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasksFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.TaskFragment"
+        android:label="TaskFragment" >
+        <argument
+            android:name="taskId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

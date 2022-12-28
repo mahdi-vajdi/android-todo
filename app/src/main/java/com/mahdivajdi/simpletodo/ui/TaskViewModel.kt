@@ -12,7 +12,7 @@ class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
         taskRepository.getTasks().asLiveData()
 
     fun getTask(id: Int) =
-        taskRepository.getTask(id)
+        taskRepository.getTask(id).asLiveData()
 
     fun insertTask(task: TaskDomainModel) = viewModelScope.launch {
         taskRepository.insertTask(task)

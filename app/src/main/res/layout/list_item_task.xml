@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView_tasks_id"
+            android:id="@+id/textView_taskItem_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -19,53 +19,53 @@
             tools:text="12" />
 
         <TextView
-            android:id="@+id/textView_tasks_timestamp"
+            android:id="@+id/textView_taskItem_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/textView_tasks_title"
-            app:layout_constraintTop_toTopOf="@+id/textView_tasks_id"
+            app:layout_constraintStart_toEndOf="@+id/textView_taskItem_title"
+            app:layout_constraintTop_toTopOf="@+id/textView_taskItem_id"
             tools:text="2022/12/25 22:30" />
 
         <TextView
-            android:id="@+id/textView_tasks_title"
+            android:id="@+id/textView_taskItem_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/textView_tasks_id"
-            app:layout_constraintTop_toTopOf="@+id/textView_tasks_id"
+            app:layout_constraintStart_toEndOf="@+id/textView_taskItem_id"
+            app:layout_constraintTop_toTopOf="@+id/textView_taskItem_id"
             tools:text="Do laundry" />
 
         <TextView
-            android:id="@+id/textView_tasks_description"
+            android:id="@+id/textView_taskItem_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/textView_tasks_id"
-            app:layout_constraintTop_toBottomOf="@+id/textView_tasks_id"
+            app:layout_constraintStart_toStartOf="@+id/textView_taskItem_id"
+            app:layout_constraintTop_toBottomOf="@+id/textView_taskItem_id"
             tools:text="Do laundry at 10:30" />
 
         <TextView
-            android:id="@+id/textView_tasks_done"
+            android:id="@+id/textView_taskItem_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView_tasks_id"
-            app:layout_constraintTop_toBottomOf="@+id/textView_tasks_description"
+            app:layout_constraintStart_toStartOf="@+id/textView_taskItem_id"
+            app:layout_constraintTop_toBottomOf="@+id/textView_taskItem_description"
             tools:text="true" />
 
         <TextView
-            android:id="@+id/textView_tasks_tags"
+            android:id="@+id/textView_taskItem_tags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView_tasks_done"
-            app:layout_constraintTop_toBottomOf="@+id/textView_tasks_description"
+            app:layout_constraintStart_toEndOf="@+id/textView_taskItem_done"
+            app:layout_constraintTop_toBottomOf="@+id/textView_taskItem_description"
             tools:text="personal, chores" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
