@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui
+package com.mahdivajdi.simpletodo.ui.task
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahdivajdi.simpletodo.data.TaskRepository
 import com.mahdivajdi.simpletodo.data.local.AppDatabase
 import com.mahdivajdi.simpletodo.databinding.FragmentTasksBinding
+import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
+import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
 import com.mahdivajdi.simpletodo.ui.adapter.TaskListAdapter
 
 

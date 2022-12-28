@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui
+package com.mahdivajdi.simpletodo.ui.task
 
 import androidx.lifecycle.*
 import com.mahdivajdi.simpletodo.data.TaskRepository

@@ -6,7 +6,7 @@
     app:startDestination="@id/tasksFragment">
     <fragment
         android:id="@+id/tasksFragment"
-        android:name="com.mahdivajdi.simpletodo.ui.TasksFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.task.TasksFragment"
         android:label="TasksFragment"
         tools:layout="@layout/fragment_tasks">
         <action
@@ -15,10 +15,26 @@
     </fragment>
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.mahdivajdi.simpletodo.ui.TaskFragment"
-        android:label="TaskFragment" >
+        android:name="com.mahdivajdi.simpletodo.ui.task.TaskFragment"
+        android:label="TaskFragment"
+        tools:layout="@layout/fragment_task">
         <argument
             android:name="taskId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_taskFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.task.EditTaskFragment"
+        android:label="EditTaskFragment"
+        tools:layout="@layout/fragment_edit_task">
+        <argument
+            android:name="taskId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_editTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
     </fragment>
 </navigation>

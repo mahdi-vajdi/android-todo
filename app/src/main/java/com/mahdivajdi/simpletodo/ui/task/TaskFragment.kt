@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui
+package com.mahdivajdi.simpletodo.ui.task
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.data.TaskRepository
 import com.mahdivajdi.simpletodo.data.local.AppDatabase
@@ -38,26 +38,35 @@ class TaskFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentTaskBinding.inflate(layoutInflater, container, false)
+        task = taskViewModel.getTask(args.taskId)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        task = taskViewModel.getTask(args.taskId)
         task.observe(viewLifecycleOwner) { task ->
             binding.apply {
-                editTextTaskTitle.text = task.title
-                editTextTaskDescription.text = task.description
-                editTextTaskTimestamp.text = task.timestamp.toString()
+                textViewTaskTitle.text = task.title
+                textViewTaskDescription.text = task.description
+                textViewTaskTimestamp.text = task.timestamp.toString()
                 buttonTaskDone.setOnClickListener {
                     taskViewModel.updateTask(task.apply { done = true })
                 }
                 buttonTaskDelete.setOnClickListener {
                     taskViewModel.deleteTask(task)
                 }
+                buttonTaskEdit.setOnClickListener {
+                    val action = TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task.id)
+                    view.findNavController().navigate(action)
+                }
             }
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }
