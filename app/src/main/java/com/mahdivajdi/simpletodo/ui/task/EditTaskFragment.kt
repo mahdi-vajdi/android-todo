@@ -7,16 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.App
-import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.TaskRepository
-import com.mahdivajdi.simpletodo.data.local.AppDatabase
 import com.mahdivajdi.simpletodo.databinding.FragmentEditTaskBinding
-import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
-import kotlinx.coroutines.NonDisposableHandle.parent
+import com.mahdivajdi.simpletodo.domain.model.Task
 
 class EditTaskFragment : Fragment() {
 
@@ -32,7 +28,7 @@ class EditTaskFragment : Fragment() {
     private val binding: FragmentEditTaskBinding get() = _binding!!
 
     private val args: TaskFragmentArgs by navArgs()
-    private lateinit var task: LiveData<TaskDomainModel>
+    private lateinit var task: LiveData<Task>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

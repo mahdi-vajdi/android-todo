@@ -11,9 +11,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.TaskRepository
-import com.mahdivajdi.simpletodo.data.local.AppDatabase
 import com.mahdivajdi.simpletodo.databinding.FragmentTaskBinding
-import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
+import com.mahdivajdi.simpletodo.domain.model.Task
 
 
 class TaskFragment : Fragment() {
@@ -30,7 +29,7 @@ class TaskFragment : Fragment() {
     private val binding: FragmentTaskBinding get() = _binding!!
 
     private val args: TaskFragmentArgs by navArgs()
-    private lateinit var task: LiveData<TaskDomainModel>
+    private lateinit var task: LiveData<Task>
 
 
     override fun onCreateView(
@@ -57,7 +56,7 @@ class TaskFragment : Fragment() {
                     taskViewModel.deleteTask(task)
                 }
                 buttonTaskEdit.setOnClickListener {
-                    val action = TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task.id)
+                    val action = TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task.taskId)
                     view.findNavController().navigate(action)
                 }
             }

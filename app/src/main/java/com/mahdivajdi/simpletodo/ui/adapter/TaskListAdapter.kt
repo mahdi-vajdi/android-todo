@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahdivajdi.simpletodo.databinding.ListItemTaskBinding
-import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
+import com.mahdivajdi.simpletodo.domain.model.Task
 
-class TaskListAdapter(private val onItemClicked: (Int) -> Unit) :
-    ListAdapter<TaskDomainModel, TaskListAdapter.TaskViewHolder>(DiffCallback) {
+class TaskListAdapter(private val onItemClicked: (Long) -> Unit) :
+    ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -27,32 +27,31 @@ class TaskListAdapter(private val onItemClicked: (Int) -> Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(task: TaskDomainModel, onItemClicked: (Int) -> Unit) {
+        fun bind(task: Task, onItemClicked: (Long) -> Unit) {
             binding.apply {
-                textViewTaskItemId.text = task.id.toString()
+                textViewTaskItemId.text = task.taskId.toString()
                 textViewTaskItemTitle.text = task.title
                 textViewTaskItemTimestamp.text = task.timestamp.toString()
                 textViewTaskItemDescription.text = task.description
                 textViewTaskItemDone.text = task.done.toString()
-                textViewTaskItemTags.text = task.tag.toString()
             }
-            itemView.setOnClickListener { onItemClicked(task.id) }
+            itemView.setOnClickListener { onItemClicked(task.taskId) }
         }
 
     }
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<TaskDomainModel>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Task>() {
             override fun areItemsTheSame(
-                oldItem: TaskDomainModel,
-                newItem: TaskDomainModel,
+                oldItem: Task,
+                newItem: Task,
             ): Boolean {
-                return (oldItem.id == newItem.id)
+                return (oldItem.taskId == newItem.taskId)
             }
 
             override fun areContentsTheSame(
-                oldItem: TaskDomainModel,
-                newItem: TaskDomainModel,
+                oldItem: Task,
+                newItem: Task,
             ): Boolean {
                 return oldItem == newItem
             }

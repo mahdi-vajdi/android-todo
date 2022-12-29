@@ -4,16 +4,12 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.mahdivajdi.simpletodo.databinding.AddTaskDialogBinding
-import com.mahdivajdi.simpletodo.databinding.FragmentEditTaskBinding
-import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
+import com.mahdivajdi.simpletodo.domain.model.Task
 import java.time.Instant
 
-class AddTaskFragment(private val newTask: (task: TaskDomainModel) -> Unit) : DialogFragment() {
+class AddTaskFragment(private val newTask: (task: Task) -> Unit) : DialogFragment() {
 
     private var _binding: AddTaskDialogBinding? = null
     private val binding: AddTaskDialogBinding get() = _binding!!
@@ -25,11 +21,11 @@ class AddTaskFragment(private val newTask: (task: TaskDomainModel) -> Unit) : Di
             builder.setView(binding.root)
                 .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
                     val instant = Instant.now()
-                    val task = TaskDomainModel(
+                    // TODO: Fix the absence of category id in the task model
+                    val task = Task(
                         title = binding.editTextAddTaskTitle.text.toString(),
                         description = binding.editTextAddTaskDescription.text.toString(),
                         timestamp = instant.epochSecond,
-                        tag = binding.editTextAddTaskTtags.text.toString()
                     )
                     newTask(task)
                     dialog?.cancel()

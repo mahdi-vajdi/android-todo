@@ -2,27 +2,27 @@ package com.mahdivajdi.simpletodo.ui.task
 
 import androidx.lifecycle.*
 import com.mahdivajdi.simpletodo.data.TaskRepository
-import com.mahdivajdi.simpletodo.domain.model.TaskDomainModel
+import com.mahdivajdi.simpletodo.domain.model.Task
 import kotlinx.coroutines.launch
 
 
 class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
 
-    fun getTasks(): LiveData<List<TaskDomainModel>> =
+    fun getTasks(): LiveData<List<Task>> =
         taskRepository.getTasks().asLiveData()
 
-    fun getTask(id: Int) =
+    fun getTask(id: Long) =
         taskRepository.getTask(id).asLiveData()
 
-    fun insertTask(task: TaskDomainModel) = viewModelScope.launch {
+    fun insertTask(task: Task) = viewModelScope.launch {
         taskRepository.insertTask(task)
     }
 
-    fun updateTask(task: TaskDomainModel) = viewModelScope.launch {
+    fun updateTask(task: Task) = viewModelScope.launch {
         taskRepository.updateTask(task)
     }
 
-    fun deleteTask(task: TaskDomainModel) = viewModelScope.launch {
+    fun deleteTask(task: Task) = viewModelScope.launch {
         taskRepository.deleteTask(task)
     }
 }
