@@ -22,16 +22,7 @@ interface TaskDao {
     suspend fun updateTask(taskEntity: TaskEntity)
 
     @Delete
-    suspend fun deleteTask(taskEntity: TaskEntity)
+    suspend fun deleteTask(taskId: Long)
     
 }
-
-fun TaskEntity.toDomainModel() = Task(
-    taskId = this.taskId,
-    taskCategoryId = this.taskCategoryId,
-    title = this.title,
-    description = this.description,
-    timestamp = this.timestamp,
-    done = this.done,
-)
 

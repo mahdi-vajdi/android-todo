@@ -10,7 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.App
-import com.mahdivajdi.simpletodo.data.TaskRepository
+import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
 
@@ -53,7 +53,7 @@ class TaskFragment : Fragment() {
                     taskViewModel.updateTask(task.apply { done = true })
                 }
                 buttonTaskDelete.setOnClickListener {
-                    taskViewModel.deleteTask(task)
+                    taskViewModel.deleteTask(task.taskId)
                 }
                 buttonTaskEdit.setOnClickListener {
                     val action = TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task.taskId)

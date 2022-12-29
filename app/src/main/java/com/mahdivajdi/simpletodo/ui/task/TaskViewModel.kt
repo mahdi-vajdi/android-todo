@@ -1,7 +1,7 @@
 package com.mahdivajdi.simpletodo.ui.task
 
 import androidx.lifecycle.*
-import com.mahdivajdi.simpletodo.data.TaskRepository
+import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.domain.model.Task
 import kotlinx.coroutines.launch
 
@@ -22,8 +22,8 @@ class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
         taskRepository.updateTask(task)
     }
 
-    fun deleteTask(task: Task) = viewModelScope.launch {
-        taskRepository.deleteTask(task)
+    fun deleteTask(taskId: Long) = viewModelScope.launch {
+        taskRepository.deleteTask(taskId)
     }
 }
 
