@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/tasksFragment">
+
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.TasksFragment"
@@ -37,4 +38,9 @@
             android:id="@+id/action_editTaskFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.category.CategoriesFragment"
+        android:label="CategoriesFragment"
+        tools:layout="@layout/fragment_categories" />
 </navigation>

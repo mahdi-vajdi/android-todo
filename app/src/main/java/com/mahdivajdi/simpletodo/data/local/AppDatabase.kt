@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.mahdivajdi.simpletodo.data.local.dao.CategoryDao
 import com.mahdivajdi.simpletodo.data.local.dao.TaskDao
 import com.mahdivajdi.simpletodo.data.local.entity.CategoryEntity
 import com.mahdivajdi.simpletodo.data.local.entity.TaskEntity
@@ -14,7 +15,7 @@ import com.mahdivajdi.simpletodo.data.local.entity.TaskEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
-    abstract fun categoryDao(): TaskDao
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
 

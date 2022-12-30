@@ -10,7 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.App
-import com.mahdivajdi.simpletodo.data.TaskRepository
+import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
+import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentEditTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
 
@@ -18,9 +19,8 @@ class EditTaskFragment : Fragment() {
 
     private val taskViewModel: TaskViewModel by activityViewModels {
         TaskViewModelFactory(
-            TaskRepository(
-                (activity?.application as App).database.taskDao()
-            )
+            TaskRepository((activity?.application as App).database.taskDao()),
+            CategoryRepository((activity?.application as App).database.categoryDao())
         )
     }
 
