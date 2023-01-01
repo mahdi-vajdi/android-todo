@@ -8,18 +8,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_addTask_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="24dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_addTask_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="24dp" />
+
         <EditText
             android:id="@+id/editText_addTask_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
             android:ems="10"
             android:hint="Title"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_2"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_1"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -28,29 +40,24 @@
             android:layout_width="0dp"
             android:layout_height="180dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="24dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="Description"
             android:inputType="textMultiLine"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/editText_addTask_title"
-            app:layout_constraintStart_toStartOf="@+id/editText_addTask_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_2"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_1"
             app:layout_constraintTop_toBottomOf="@+id/editText_addTask_title" />
 
-        <EditText
-            android:id="@+id/editText_addTask_ttags"
-            android:layout_width="0dp"
+        <Spinner
+            android:id="@+id/spinner_addTask_category"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Tags"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/editText_addTask_title"
-            app:layout_constraintStart_toStartOf="@+id/editText_addTask_title"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_1"
             app:layout_constraintTop_toBottomOf="@+id/editText_addTask_description" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
