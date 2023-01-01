@@ -34,9 +34,6 @@
         <argument
             android:name="taskId"
             app:argType="long" />
-        <action
-            android:id="@+id/action_editTaskFragment_to_taskFragment"
-            app:destination="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
@@ -52,6 +49,18 @@
         android:name="com.mahdivajdi.simpletodo.ui.category.CategoryFragment"
         android:label="CategoryFragment"
         tools:layout="@layout/fragment_category">
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_categoryFragment_to_editCategoryFragment"
+            app:destination="@id/editCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCategoryFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.category.EditCategoryFragment"
+        android:label="EditCategoryFragment"
+        tools:layout="@layout/fragment_edit_category">
         <argument
             android:name="categoryId"
             app:argType="long" />

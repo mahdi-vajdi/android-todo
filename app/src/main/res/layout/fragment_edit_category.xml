@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:context=".ui.category.EditCategoryFragment">
+
+       <androidx.constraintlayout.widget.Guideline
+           android:id="@+id/guideline_editCategory_1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           app:layout_constraintGuide_end="16dp" />
+
+       <androidx.constraintlayout.widget.Guideline
+           android:id="@+id/guideline_editCategory_2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="16dp"
+           android:orientation="vertical"
+           app:layout_constraintGuide_begin="16dp"
+           app:layout_constraintStart_toStartOf="parent" />
+
+       <EditText
+           android:id="@+id/editText_editCategory_title"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="24dp"
+           android:ems="10"
+           android:inputType="textPersonName"
+           android:hint="Title"
+           app:layout_constraintEnd_toStartOf="@+id/guideline_editCategory_1"
+           app:layout_constraintStart_toStartOf="@+id/guideline_editCategory_2"
+           app:layout_constraintTop_toTopOf="parent" />
+
+       <EditText
+           android:id="@+id/editText_editCategory__description"
+           android:layout_width="0dp"
+           android:layout_height="120dp"
+           android:layout_marginTop="16dp"
+           android:ems="10"
+           android:inputType="textPersonName"
+           android:hint="Description"
+           app:layout_constraintEnd_toStartOf="@+id/guideline_editCategory_1"
+           app:layout_constraintStart_toStartOf="@+id/guideline_editCategory_2"
+           app:layout_constraintTop_toBottomOf="@+id/editText_editCategory_title" />
+
+       <Button
+           android:id="@+id/button_editCategory_save"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="24dp"
+           android:text="Save"
+           app:layout_constraintEnd_toStartOf="@+id/guideline_editCategory_1"
+           app:layout_constraintTop_toBottomOf="@+id/editText_editCategory__description" />
+
+       <Button
+           android:id="@+id/button_editCategory__cancel"
+           style="@style/Widget.MaterialComponents.Button.TextButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginEnd="24dp"
+           android:text="Cancel"
+           app:layout_constraintBottom_toBottomOf="@+id/button_editCategory_save"
+           app:layout_constraintEnd_toStartOf="@+id/button_editCategory_save"
+           app:layout_constraintTop_toTopOf="@+id/button_editCategory_save" />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
