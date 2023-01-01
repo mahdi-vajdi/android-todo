@@ -1,11 +1,8 @@
 package com.mahdivajdi.simpletodo.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.mahdivajdi.simpletodo.data.local.entity.CATEGORY_TABLE_NAME
+import com.mahdivajdi.simpletodo.data.local.entity.CategoryAndTask
 import com.mahdivajdi.simpletodo.data.local.entity.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,6 +15,10 @@ interface CategoryDao {
     @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE category_id = :categoryId")
     fun getCategory(categoryId: Long): Flow<CategoryEntity>
 
+    @Transaction
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE category_id = :categoryId")
+    fun getCategoryTasks(categoryId: Long) : Flow<CategoryAndTask>
+
     @Insert
     suspend fun insertCategory(category: CategoryEntity): Long
 
@@ -26,5 +27,4 @@ interface CategoryDao {
 
     @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE category_id = :categoryId")
     suspend fun deleteCategory(categoryId: Long)
-
 }

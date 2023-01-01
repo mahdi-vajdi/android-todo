@@ -6,7 +6,7 @@ data class Task(
     val title: String,
     val description: String,
     val timestamp: Long,
-    val done: Boolean = false,
+    var done: Boolean = false,
 )
 
 

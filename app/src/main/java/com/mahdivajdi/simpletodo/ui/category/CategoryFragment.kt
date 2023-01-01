@@ -9,12 +9,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahdivajdi.simpletodo.App
-import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentCategoryBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
+import com.mahdivajdi.simpletodo.ui.adapter.TaskListAdapter
 import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
 import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
 
@@ -33,6 +34,8 @@ class CategoryFragment : Fragment() {
     private val args: CategoryFragmentArgs by navArgs()
     private lateinit var category: LiveData<Category>
 
+    private lateinit var taskListAdapter: TaskListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -45,9 +48,16 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Initiate recyclerview
+        taskListAdapter = TaskListAdapter { taskId ->
+            val action = CategoryFragmentDirections.actionCategoryFragmentToTaskFragment(taskId)
+            view.findNavController().navigate(action)
+        }
+        binding.recyclerViewCategoryTaskList.adapter = taskListAdapter
+        binding.recyclerViewCategoryTaskList.layoutManager = LinearLayoutManager(requireContext())
+
         category.observe(viewLifecycleOwner) { category ->
             binding.apply {
-                textViewCategoryId.text = category.categoryId.toString()
                 textViewCategoryTitle.text = category.name
                 textViewCategoryDescription.text = category.description
             }
@@ -58,7 +68,13 @@ class CategoryFragment : Fragment() {
                 val action = CategoryFragmentDirections.actionCategoryFragmentToEditCategoryFragment(category.categoryId)
                 view.findNavController().navigate(action)
             }
+            taskViewModel.getTaskByCategoryId(category.categoryId).observe(viewLifecycleOwner) {
+                taskListAdapter.submitList(it)
+            }
         }
+
+
+
     }
 
     override fun onDestroy() {

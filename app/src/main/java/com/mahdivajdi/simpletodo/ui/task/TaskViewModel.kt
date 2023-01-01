@@ -1,14 +1,10 @@
 package com.mahdivajdi.simpletodo.ui.task
 
 import androidx.lifecycle.*
-import com.mahdivajdi.simpletodo.data.local.mapper.CategoryMapper.toDomain
-import com.mahdivajdi.simpletodo.data.local.mapper.CategoryMapper.toEntity
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.domain.model.Category
 import com.mahdivajdi.simpletodo.domain.model.Task
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
@@ -39,6 +35,9 @@ class TaskViewModel(
 
     fun getCategory(categoryId: Long): LiveData<Category> =
         categoryRepository.getCategory(categoryId).asLiveData()
+
+    fun getTaskByCategoryId(categoryId: Long) =
+        categoryRepository.getTasksByCategoryId(categoryId).asLiveData()
 
     fun insertCategory(category: Category) = viewModelScope.launch {
         categoryRepository.insertCategory(category)
