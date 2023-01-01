@@ -40,11 +40,17 @@ class TaskViewModel(
     fun getCategory(categoryId: Long): LiveData<Category> =
         categoryRepository.getCategory(categoryId).asLiveData()
 
-    suspend fun insertCategory(category: Category): Long = categoryRepository.insertCategory(category)
+    fun insertCategory(category: Category) = viewModelScope.launch {
+        categoryRepository.insertCategory(category)
+    }
 
-    suspend fun updateCategory(category: Category) = categoryRepository.updateCategory(category)
+    fun updateCategory(category: Category) = viewModelScope.launch {
+        categoryRepository.updateCategory(category)
+    }
 
-    suspend fun deleteCategory(categoryId: Long) = categoryRepository.deleteCategory(categoryId)
+    fun deleteCategory(categoryId: Long) = viewModelScope.launch {
+        categoryRepository.deleteCategory(categoryId)
+    }
 }
 
 class TaskViewModelFactory(
