@@ -47,11 +47,14 @@ class EditTaskFragment : Fragment() {
                 editTextEditTaskTitle.setText(task.title)
                 editTextEditTaskDescription.setText(task.description)
                 buttonEditTaskSave.setOnClickListener {
-                    val editedTask = task.apply {
-                        title = editTextEditTaskTitle.text.toString()
-                        description = editTextEditTaskDescription.text.toString()
-                    }
-                    taskViewModel.updateTask(editedTask)
+                    taskViewModel.updateTask(Task(
+                        taskId = task.taskId,
+                        taskCategoryId = task.taskCategoryId,
+                        title = editTextEditTaskTitle.text.toString(),
+                        description = editTextEditTaskDescription.text.toString(),
+                        timestamp = task.timestamp,
+                        done = task.done
+                    ))
                     findNavController().popBackStack()
                 }
                 buttonEditTaskCancel.setOnClickListener {
