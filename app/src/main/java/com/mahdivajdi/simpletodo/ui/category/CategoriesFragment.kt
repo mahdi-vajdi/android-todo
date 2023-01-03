@@ -54,16 +54,17 @@ class CategoriesFragment : Fragment() {
         binding.recyclerViewCategories.adapter = categoryListAdapter
         binding.recyclerViewCategories.layoutManager = LinearLayoutManager(requireContext())
         taskViewModel.getCategories().observe(viewLifecycleOwner) {
+            Log.d("categoriesFix", "onViewCreated: category list= $it")
             categoryListAdapter.submitList(it)
         }
 
         // Add new category
-        binding.fabCategoriesAdd.setOnClickListener {
+       /* binding.fabCategoriesAdd.setOnClickListener {
             val addCategoryFragment = AddCategoryFragment { category ->
                 Log.i("task", "onViewCreated: newTask= $it")
                 taskViewModel.insertCategory(category)
             }
             addCategoryFragment.show(parentFragmentManager, "add_task")
-        }
+        }*/
     }
 }

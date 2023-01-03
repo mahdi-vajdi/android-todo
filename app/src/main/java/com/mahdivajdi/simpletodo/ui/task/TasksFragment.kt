@@ -53,13 +53,13 @@ class TasksFragment : Fragment() {
             taskListAdapter.submitList(it)
         }
 
-        binding.fabMainAdd.setOnClickListener {
+       /* binding.fabMainAdd.setOnClickListener {
             val addTaskFragment = AddTaskFragment {
                 Log.i("task", "onViewCreated: newTask= $it")
                 taskViewModel.insertTask(it)
             }
             addTaskFragment.show(parentFragmentManager, "add_task")
-        }
+        }*/
     }
 
     override fun onDestroy() {

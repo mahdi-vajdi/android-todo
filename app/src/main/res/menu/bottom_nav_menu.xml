@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/tasksFragment"
-        android:icon="@drawable/ic_round_tasks_24"
-        android:title="Tasks" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/categoriesFragment"
-        android:icon="@drawable/ic_round_categories_24"
-        android:title="Categories" />
+        android:icon="@drawable/ic_round_tasks_24"
+        android:title="All"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/placeholder1"
+        android:icon="@drawable/ic_round_important_24"
+        android:title="Important"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/placeholder2"
+        android:icon="@drawable/ic_round_today_24"
+        android:title="Today"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/placeholder3"
+        android:icon="@drawable/ic_round_tomorrow_24"
+        android:title="Tomorrow"
+        app:showAsAction="always" />
+
+
 </menu>

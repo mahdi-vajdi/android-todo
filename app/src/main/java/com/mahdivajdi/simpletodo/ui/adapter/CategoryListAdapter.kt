@@ -1,5 +1,6 @@
 package com.mahdivajdi.simpletodo.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -15,6 +16,7 @@ class CategoryListAdapter(private val onItemClicked: (Long) -> Unit) :
         parent: ViewGroup,
         viewType: Int,
     ): CategoryViewHolder {
+        Log.d("categoriesFix", "onCreateViewHolder: category list adapter")
         return CategoryViewHolder(
             ListItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
@@ -29,6 +31,7 @@ class CategoryListAdapter(private val onItemClicked: (Long) -> Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(category: Category, onItemClicked: (Long) -> Unit) {
+            Log.d("categoriesFix", "bind: category list adapter viewholder")
             binding.apply {
                 textViewCategoryItemId.text = category.categoryId.toString()
                 textViewCategoryItemTitle.text = category.name
