@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
@@ -58,6 +59,11 @@ class CategoriesFragment : Fragment() {
             val viewPager = binding.viewPagerCategories
             val viewPagerAdapter = CategoryViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle, categoryIds)
             viewPager.adapter = viewPagerAdapter
+
+            TabLayoutMediator(binding.tabLayoutCategories, viewPager) { tab, position ->
+                tab.text = categoryList[position].name
+            }.attach()
+
         }
 
         // Add new category
