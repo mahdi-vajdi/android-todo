@@ -14,6 +14,7 @@ import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
+import com.mahdivajdi.simpletodo.ui.category.CategoriesFragmentDirections
 
 
 class TaskFragment : Fragment() {
@@ -44,6 +45,9 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.executePendingBindings()
+
         task.observe(viewLifecycleOwner) { task ->
             binding.apply {
                 textViewTaskTitle.text = task.title
@@ -56,7 +60,7 @@ class TaskFragment : Fragment() {
                     taskViewModel.deleteTask(task.taskId)
                 }
                 buttonTaskEdit.setOnClickListener {
-                    val action = TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task.taskId)
+                    val action = CategoriesFragmentDirections.actionCategoriesFragmentToEditTaskFragment(task.taskId)
                     view.findNavController().navigate(action)
                 }
             }

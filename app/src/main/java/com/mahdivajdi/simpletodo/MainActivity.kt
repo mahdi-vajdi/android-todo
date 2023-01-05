@@ -24,9 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         // Set up toolbar
         setSupportActionBar(binding.toolbar)
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.categoriesFragment, R.id.tasksFragment))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        /*val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.categoriesFragment, )*/
+        setupActionBarWithNavController(navController)
 
         // Set up bottom nav
         binding.bottomNavigationBar.background = null

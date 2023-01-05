@@ -27,7 +27,7 @@ class EditCategoryFragment : Fragment() {
         )
     }
 
-    private val args: CategoryFragmentArgs by navArgs()
+    private val args: EditCategoryFragmentArgs by navArgs()
     private lateinit var category: LiveData<Category>
 
     private var _binding: FragmentEditCategoryBinding? = null
@@ -45,6 +45,9 @@ class EditCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.executePendingBindings()
+
         category.observe(viewLifecycleOwner) { category ->
             binding.apply {
                 editTextEditCategoryTitle.setText(category.name)
