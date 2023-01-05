@@ -4,16 +4,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import com.mahdivajdi.simpletodo.App
-import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.AddTaskDialogBinding
@@ -55,10 +49,13 @@ class AddTaskFragment(private val newTask: (task: Task) -> Unit) : DialogFragmen
                     val instant = Instant.now()
                     val spinner = binding.spinnerAddTaskCategory
                     val task = Task(
+                        taskCategoryId = (spinner.getItemAtPosition(spinner.selectedItemPosition) as Category).categoryId,
                         title = binding.editTextAddTaskTitle.text.toString(),
-                        description = binding.editTextAddTaskDescription.text.toString(),
-                        timestamp = instant.epochSecond,
-                        taskCategoryId = (spinner.getItemAtPosition(spinner.selectedItemPosition) as Category).categoryId
+                        detail = binding.editTextAddTaskDescription.text.toString(),
+                        dateModified = instant.epochSecond,
+                        state = false,
+                        schedule = 0,
+                        priority = false
                     )
                     newTask(task)
                     dialog?.cancel()

@@ -34,8 +34,7 @@ class CategoryListAdapter(private val onItemClicked: (Long) -> Unit) :
             Log.d("categoriesFix", "bind: category list adapter viewholder")
             binding.apply {
                 textViewCategoryItemId.text = category.categoryId.toString()
-                textViewCategoryItemTitle.text = category.name
-                textViewCategoryItemDescription.text = category.description
+                textViewCategoryItemTitle.text = category.title
             }
             itemView.setOnClickListener { onItemClicked(category.categoryId) }
         }

@@ -61,7 +61,7 @@ class CategoriesFragment : Fragment() {
             viewPager.adapter = viewPagerAdapter
 
             TabLayoutMediator(binding.tabLayoutCategories, viewPager) { tab, position ->
-                tab.text = categoryList[position].name
+                tab.text = categoryList[position].title
             }.attach()
 
         }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
@@ -50,14 +49,12 @@ class EditCategoryFragment : Fragment() {
 
         category.observe(viewLifecycleOwner) { category ->
             binding.apply {
-                editTextEditCategoryTitle.setText(category.name)
-                editTextEditCategoryDescription.setText(category.description)
+                editTextEditCategoryTitle.setText(category.title)
                 buttonEditCategorySave.setOnClickListener {
                     taskViewModel.updateCategory(
                         Category(
                             categoryId = category.categoryId,
-                            name = editTextEditCategoryTitle.text.toString(),
-                            description = editTextEditCategoryDescription.text.toString()
+                            title = editTextEditCategoryTitle.text.toString(),
                         )
                     )
                     view.findNavController().popBackStack()

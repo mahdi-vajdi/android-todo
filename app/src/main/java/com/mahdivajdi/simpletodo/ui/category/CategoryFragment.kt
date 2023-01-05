@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
@@ -69,8 +68,7 @@ class CategoryFragment : Fragment() {
         category.observe(viewLifecycleOwner) { category ->
             Log.d("viewpager", "onViewCreated: $category")
             binding.apply {
-                textViewCategoryTitle.text = category.name
-                textViewCategoryDescription.text = category.description
+                textViewCategoryTitle.text = category.title
             }
             binding.buttonCategoryDelete.setOnClickListener {
                 taskViewModel.deleteCategory(category.categoryId)

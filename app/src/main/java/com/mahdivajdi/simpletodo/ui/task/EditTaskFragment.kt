@@ -45,15 +45,17 @@ class EditTaskFragment : Fragment() {
         task.observe(viewLifecycleOwner) { task ->
             binding.apply {
                 editTextEditTaskTitle.setText(task.title)
-                editTextEditTaskDescription.setText(task.description)
+                editTextEditTaskDescription.setText(task.detail)
                 buttonEditTaskSave.setOnClickListener {
                     taskViewModel.updateTask(Task(
                         taskId = task.taskId,
                         taskCategoryId = task.taskCategoryId,
                         title = editTextEditTaskTitle.text.toString(),
-                        description = editTextEditTaskDescription.text.toString(),
-                        timestamp = task.timestamp,
-                        done = task.done
+                        detail = editTextEditTaskDescription.text.toString(),
+                        dateModified = task.dateModified,
+                        state = task.state,
+                        schedule = 0,
+                        priority = false
                     ))
                     findNavController().popBackStack()
                 }

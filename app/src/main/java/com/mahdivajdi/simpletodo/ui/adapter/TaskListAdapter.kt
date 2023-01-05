@@ -31,9 +31,9 @@ class TaskListAdapter(private val onItemClicked: (Long) -> Unit) :
             binding.apply {
                 textViewTaskItemId.text = task.taskId.toString()
                 textViewTaskItemTitle.text = task.title
-                textViewTaskItemTimestamp.text = task.timestamp.toString()
-                textViewTaskItemDescription.text = task.description
-                textViewTaskItemDone.text = task.done.toString()
+                textViewTaskItemTimestamp.text = task.dateModified.toString()
+                textViewTaskItemDescription.text = task.detail
+                textViewTaskItemDone.text = task.state.toString()
             }
             itemView.setOnClickListener { onItemClicked(task.taskId) }
         }

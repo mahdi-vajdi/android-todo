@@ -21,8 +21,7 @@ class AddCategoryFragment(private val newCategory: (category: Category) -> Unit)
             builder.setView(binding.root)
                 .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
                     val category = Category(
-                        name = binding.editTextAddCategoryTitle.text.toString(),
-                        description = binding.editTextAddCategoryDescription.text.toString()
+                        title = binding.editTextAddCategoryTitle.text.toString(),
                     )
                     newCategory(category)
                     dialog?.cancel()

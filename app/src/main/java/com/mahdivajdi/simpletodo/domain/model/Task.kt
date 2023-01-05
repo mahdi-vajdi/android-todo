@@ -4,9 +4,11 @@ data class Task(
     val taskId: Long = 0,
     val taskCategoryId: Long,
     val title: String,
-    val description: String,
-    val timestamp: Long,
-    var done: Boolean = false,
+    val detail: String,
+    val dateModified: Long,
+    val state: Boolean = false,
+    val schedule: Long,
+    val priority: Boolean,
 )
 
 

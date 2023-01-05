@@ -51,10 +51,19 @@ class TaskFragment : Fragment() {
         task.observe(viewLifecycleOwner) { task ->
             binding.apply {
                 textViewTaskTitle.text = task.title
-                textViewTaskDescription.text = task.description
-                textViewTaskTimestamp.text = task.timestamp.toString()
+                textViewTaskDescription.text = task.detail
+                textViewTaskTimestamp.text = task.dateModified.toString()
                 buttonTaskDone.setOnClickListener {
-                    taskViewModel.updateTask(task.apply { done = true })
+                    taskViewModel.updateTask(Task(
+                        taskId = task.taskId,
+                        taskCategoryId = task.taskCategoryId,
+                        title = task.title,
+                        detail = task.detail,
+                        dateModified = task.dateModified,
+                        state = true,
+                        schedule = task.schedule,
+                        priority = task.priority
+                    ))
                 }
                 buttonTaskDelete.setOnClickListener {
                     taskViewModel.deleteTask(task.taskId)

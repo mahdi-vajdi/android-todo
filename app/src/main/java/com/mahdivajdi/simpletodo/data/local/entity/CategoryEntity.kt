@@ -9,6 +9,5 @@ const val CATEGORY_TABLE_NAME = "category"
 @Entity(tableName = CATEGORY_TABLE_NAME)
 data class CategoryEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "category_id") val categoryId: Long = 0,
-    val name: String,
-    val description: String
+    val title: String,
 )
