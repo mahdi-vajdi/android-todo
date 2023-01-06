@@ -19,13 +19,6 @@ import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val taskViewModel: TaskViewModel by viewModels {
-        TaskViewModelFactory(
-            TaskRepository((this.application as App).database.taskDao()),
-            CategoryRepository((this.application as App).database.categoryDao())
-        )
-    }
-
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,11 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         // Add new task using fab button
         binding.fabMainAddTask.setOnClickListener {
-            val addTaskFragment = AddTaskFragment {
-                Log.i("task", "onViewCreated: newTask= $it")
-                taskViewModel.insertTask(it)
-            }
-            addTaskFragment.show(supportFragmentManager, "add_task")
+            AddTaskFragment.newInstance()
+                .show(supportFragmentManager, AddTaskFragment::class.java.canonicalName)
         }
     }
 

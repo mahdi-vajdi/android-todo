@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/placeholder1"
-        android:icon="@drawable/ic_round_important_24"
+        android:icon="@drawable/ic_round_star_filled_24"
         android:title="Important"
         app:showAsAction="always" />
 

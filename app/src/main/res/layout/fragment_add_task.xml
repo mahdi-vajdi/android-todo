@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_addTask_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_addTask_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <EditText
+            android:id="@+id/editText_addTask_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Title"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editText_addTask_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Details"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_title" />
+
+        <ImageButton
+            android:id="@+id/button_addTask_save"
+            style="@android:style/Widget.Material.ImageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="#2196F3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail"
+            app:srcCompat="@drawable/ic_round_arrow_upward_24"
+            app:tint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/button_addTask_schedule"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Remind Me"
+            android:textAllCaps="false"
+            app:icon="@drawable/ic_round_time_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkBox_addTask_priority"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
+
+        <CheckBox
+            android:id="@+id/checkBox_addTask_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:button="@drawable/priority_checkbox"
+            app:checkedState="unchecked"
+            app:layout_constraintEnd_toStartOf="@+id/button_addTask_save"
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
+
+        <Spinner
+            android:id="@+id/spinner_addTask_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_addTask_schedule"
+            app:layout_constraintEnd_toStartOf="@+id/button_addTask_schedule"
+            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
+            app:layout_constraintTop_toTopOf="@+id/button_addTask_schedule" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
