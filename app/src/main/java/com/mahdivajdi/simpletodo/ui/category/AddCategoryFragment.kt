@@ -11,12 +11,12 @@ import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.AddCategoryDialogBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
+import com.mahdivajdi.simpletodo.ui.MainViewModel
+import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
 
 class AddCategoryFragment : DialogFragment() {
 
-    private val taskViewModel: TaskViewModel by activityViewModels {
+    private val mainViewModel: MainViewModel by activityViewModels {
         TaskViewModelFactory(
             TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao())
@@ -33,7 +33,7 @@ class AddCategoryFragment : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             builder.setView(binding.root)
                 .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
-                    taskViewModel.insertCategory(
+                    mainViewModel.insertCategory(
                         Category(
                             title = binding.editTextAddCategoryTitle.text.toString(),
                         )

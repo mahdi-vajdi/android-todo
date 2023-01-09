@@ -1,4 +1,4 @@
-package com.mahdivajdi.simpletodo.ui.task
+package com.mahdivajdi.simpletodo.ui
 
 import androidx.lifecycle.*
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
@@ -8,7 +8,7 @@ import com.mahdivajdi.simpletodo.domain.model.Task
 import kotlinx.coroutines.launch
 
 
-class TaskViewModel(
+class MainViewModel(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository,
 ) : ViewModel() {
@@ -62,8 +62,8 @@ class TaskViewModelFactory(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
-            return TaskViewModel(
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(
                 taskRepository,
                 categoryRepository
             ) as T

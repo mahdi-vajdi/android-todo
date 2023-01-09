@@ -1,10 +1,10 @@
 package com.mahdivajdi.simpletodo.ui.task
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
@@ -14,12 +14,14 @@ import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
+import com.mahdivajdi.simpletodo.ui.MainViewModel
+import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
 import com.mahdivajdi.simpletodo.ui.category.CategoriesFragmentDirections
 
 
 class TaskFragment : Fragment() {
 
-    private val taskViewModel: TaskViewModel by activityViewModels {
+    private val mainViewModel: MainViewModel by activityViewModels {
         TaskViewModelFactory(
             TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao())
@@ -39,7 +41,7 @@ class TaskFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentTaskBinding.inflate(layoutInflater, container, false)
-        task = taskViewModel.getTask(args.taskId)
+        task = mainViewModel.getTask(args.taskId)
         return binding.root
     }
 
@@ -54,7 +56,7 @@ class TaskFragment : Fragment() {
                 textViewTaskDescription.text = task.detail
                 textViewTaskTimestamp.text = task.dateModified.toString()
                 buttonTaskDone.setOnClickListener {
-                    taskViewModel.updateTask(Task(
+                    mainViewModel.updateTask(Task(
                         taskId = task.taskId,
                         taskCategoryId = task.taskCategoryId,
                         title = task.title,
@@ -66,7 +68,7 @@ class TaskFragment : Fragment() {
                     ))
                 }
                 buttonTaskDelete.setOnClickListener {
-                    taskViewModel.deleteTask(task.taskId)
+                    mainViewModel.deleteTask(task.taskId)
                 }
                 buttonTaskEdit.setOnClickListener {
                     val action = CategoriesFragmentDirections.actionCategoriesFragmentToEditTaskFragment(task.taskId)

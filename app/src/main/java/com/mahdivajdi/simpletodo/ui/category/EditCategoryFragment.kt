@@ -12,12 +12,12 @@ import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentEditCategoryBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
+import com.mahdivajdi.simpletodo.ui.MainViewModel
+import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
 
 class EditCategoryFragment(private val categoryId: Long) : DialogFragment() {
 
-    private val taskViewModel: TaskViewModel by activityViewModels {
+    private val mainViewModel: MainViewModel by activityViewModels {
         TaskViewModelFactory(
             TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao())
@@ -33,7 +33,7 @@ class EditCategoryFragment(private val categoryId: Long) : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             builder.setView(binding.root)
                 .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
-                    taskViewModel.updateCategory(
+                    mainViewModel.updateCategory(
                         Category(
                             categoryId = categoryId,
                             title = binding.editTextEditCategoryTitle.text.toString()
@@ -53,7 +53,7 @@ class EditCategoryFragment(private val categoryId: Long) : DialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.executePendingBindings()
 
-        taskViewModel.getCategory(categoryId).observe(viewLifecycleOwner) { category ->
+        mainViewModel.getCategory(categoryId).observe(viewLifecycleOwner) { category ->
             binding.editTextEditCategoryTitle.setText(category.title)
         }
     }

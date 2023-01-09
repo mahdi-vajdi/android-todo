@@ -1,21 +1,13 @@
 package com.mahdivajdi.simpletodo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
-import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.ActivityMainBinding
 import com.mahdivajdi.simpletodo.ui.task.AddTaskFragment
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
-import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

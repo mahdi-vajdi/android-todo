@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -17,8 +16,9 @@ import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentAddTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
 import com.mahdivajdi.simpletodo.domain.model.Task
+import com.mahdivajdi.simpletodo.ui.MainViewModel
+import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
 import java.time.Instant
-import kotlin.math.log
 
 class AddTaskFragment : BottomSheetDialogFragment() {
 
@@ -26,7 +26,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
         fun newInstance() = AddTaskFragment()
     }
 
-    private val taskViewModel: TaskViewModel by activityViewModels {
+    private val mainViewModel: MainViewModel by activityViewModels {
         TaskViewModelFactory(TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao()))
     }
@@ -62,7 +62,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerAddTaskCategory.adapter = spinnerAdapter
         // get list for category names and ids
-        taskViewModel.getCategories().observe(this) { categories ->
+        mainViewModel.getCategories().observe(this) { categories ->
             spinnerAdapter.addAll(categories)
             spinnerAdapter.notifyDataSetChanged()
         }
@@ -81,7 +81,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                 schedule = 0,
                 priority = binding.checkBoxAddTaskPriority.isChecked
             )
-            taskViewModel.insertTask(task)
+            mainViewModel.insertTask(task)
             dismiss()
         }
     }
