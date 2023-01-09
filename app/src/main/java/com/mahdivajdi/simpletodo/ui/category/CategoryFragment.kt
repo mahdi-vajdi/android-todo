@@ -71,9 +71,7 @@ class CategoryFragment : Fragment() {
                 taskViewModel.deleteCategory(category.categoryId)
             }
             binding.buttonCategoryEdit.setOnClickListener {
-                val action =
-                    CategoriesFragmentDirections.actionCategoriesFragmentToEditCategoryFragment(category.categoryId)
-                view.findNavController().navigate(action)
+                EditCategoryFragment(category.categoryId).show(childFragmentManager, "edit_category")
             }
             taskViewModel.getTaskByCategoryId(category.categoryId).observe(viewLifecycleOwner) {
                 taskListAdapter.submitList(it)
