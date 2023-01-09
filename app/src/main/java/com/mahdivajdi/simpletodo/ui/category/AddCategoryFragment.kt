@@ -5,10 +5,23 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import com.mahdivajdi.simpletodo.App
+import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
+import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.AddCategoryDialogBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
+import com.mahdivajdi.simpletodo.ui.task.TaskViewModel
+import com.mahdivajdi.simpletodo.ui.task.TaskViewModelFactory
 
-class AddCategoryFragment(private val newCategory: (category: Category) -> Unit) : DialogFragment() {
+class AddCategoryFragment : DialogFragment() {
+
+    private val taskViewModel: TaskViewModel by activityViewModels {
+        TaskViewModelFactory(
+            TaskRepository((activity?.application as App).database.taskDao()),
+            CategoryRepository((activity?.application as App).database.categoryDao())
+        )
+    }
 
     private var _binding: AddCategoryDialogBinding? = null
     private val binding: AddCategoryDialogBinding get() = _binding!!
@@ -20,10 +33,11 @@ class AddCategoryFragment(private val newCategory: (category: Category) -> Unit)
             val builder = AlertDialog.Builder(it)
             builder.setView(binding.root)
                 .setPositiveButton("Save", DialogInterface.OnClickListener { _, _ ->
-                    val category = Category(
-                        title = binding.editTextAddCategoryTitle.text.toString(),
+                    taskViewModel.insertCategory(
+                        Category(
+                            title = binding.editTextAddCategoryTitle.text.toString(),
+                        )
                     )
-                    newCategory(category)
                     dialog?.cancel()
                 }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ ->
                     dialog?.cancel()

@@ -1,5 +1,6 @@
 package com.mahdivajdi.simpletodo.ui.category
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,8 +11,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mahdivajdi.simpletodo.App
+import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentCategoriesBinding
@@ -23,17 +26,12 @@ class CategoriesFragment : Fragment() {
 
 
     private val taskViewModel: TaskViewModel by activityViewModels {
-        TaskViewModelFactory(
-            TaskRepository((activity?.application as App).database.taskDao()),
-            CategoryRepository((activity?.application as App).database.categoryDao())
-        )
+        TaskViewModelFactory(TaskRepository((activity?.application as App).database.taskDao()),
+            CategoryRepository((activity?.application as App).database.categoryDao()))
     }
 
     private var _binding: FragmentCategoriesBinding? = null
     private val binding: FragmentCategoriesBinding get() = _binding!!
-
-    //    private lateinit var categoryListAdapter: CategoryListAdapter
-//    private lateinit var categoryViewPagerAdapter: CategoryViewPagerAdapter
 
 
     override fun onCreateView(
@@ -52,28 +50,47 @@ class CategoriesFragment : Fragment() {
         binding.executePendingBindings()
 
         taskViewModel.getCategories().observe(viewLifecycleOwner) { categoryList ->
+            if (categoryList.isEmpty()) return@observe
             val categoryIds: List<Long> = categoryList.map {
                 it.categoryId
             }
             Log.d("viewpager", "onViewCreated: ctegory id list= $categoryIds")
             val viewPager = binding.viewPagerCategories
-            val viewPagerAdapter = CategoryViewPagerAdapter(requireActivity().supportFragmentManager, lifecycle, categoryIds)
+            val viewPagerAdapter =
+                CategoryViewPagerAdapter(requireActivity().supportFragmentManager,
+                    lifecycle,
+                    categoryIds)
             viewPager.adapter = viewPagerAdapter
 
-            TabLayoutMediator(binding.tabLayoutCategories, viewPager) { tab, position ->
+            val tabLayout = binding.tabLayoutCategories
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = categoryList[position].title
             }.attach()
+            // Add category tab
+            tabLayout.addTab(tabLayout.newTab().setText("+ New Category"))
+            tabLayout.addOnTabSelectedListener(object :
+                TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    if (tab?.position == categoryIds.size) {
+                        AddCategoryFragment().show(childFragmentManager, "add_category")
+                        tabLayout.setSelectedTabIndicatorColor(Color.TRANSPARENT)
+                    }
+                }
 
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.purple_500))
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    if (tab?.position == categoryIds.size) {
+                        AddCategoryFragment().show(childFragmentManager, "add_category")
+                        tab.view.isSelected = false
+                        tabLayout.setSelectedTabIndicatorColor(Color.TRANSPARENT)
+                    }
+                }
+
+            })
         }
-
-        // Add new category
-        /* binding.fabCategoriesAdd.setOnClickListener {
-             val addCategoryFragment = AddCategoryFragment { category ->
-                 Log.i("task", "onViewCreated: newTask= $it")
-                 taskViewModel.insertCategory(category)
-             }
-             addCategoryFragment.show(parentFragmentManager, "add_task")
-         }*/
     }
 }
 
@@ -83,11 +100,15 @@ class CategoryViewPagerAdapter(
     private val categoryIds: List<Long>,
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
+    private val itemCount = categoryIds.size + 1
+
     override fun getItemCount(): Int {
-        Log.d("viewpager", "getItemCount: ${categoryIds.size}")
+        Log.d("viewpager", "getItemCount: $itemCount")
         return categoryIds.size
     }
 
-    override fun createFragment(position: Int): Fragment =
-        CategoryFragment.newInstance(categoryIds[position])
+    override fun createFragment(position: Int): Fragment {
+        Log.d("viewpager", "position: $position")
+        return CategoryFragment.newInstance(categoryIds[position])
+    }
 }
