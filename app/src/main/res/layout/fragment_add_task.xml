@@ -72,7 +72,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
             app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox_addTask_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -21,6 +21,12 @@ class TaskRepository(private val dataSource: TaskDao) {
            it.toDomain()
         }
 
+    fun getPriorityTasks() = dataSource.getPriorityTasks().map { taskList ->
+        taskList.map {
+            it.toDomain()
+        }
+    }
+
     suspend fun insertTask(task: Task) =
         dataSource.insertTask(task.toEntity())
 

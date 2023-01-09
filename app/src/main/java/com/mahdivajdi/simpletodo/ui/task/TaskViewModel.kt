@@ -19,6 +19,9 @@ class TaskViewModel(
     fun getTask(id: Long) =
         taskRepository.getTask(id).asLiveData()
 
+    fun getPriorityTasks(): LiveData<List<Task>> =
+        taskRepository.getPriorityTasks().asLiveData()
+
     fun insertTask(task: Task) = viewModelScope.launch {
         taskRepository.insertTask(task)
     }

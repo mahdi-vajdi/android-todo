@@ -15,6 +15,9 @@ interface TaskDao {
     @Query("SELECT * FROM $TASK_TABLE_NAME WHERE task_id = :id")
     fun getTask(id: Long): Flow<TaskEntity>
 
+    @Query("SELECT * FROM $TASK_TABLE_NAME WHERE priority = 1")
+    fun getPriorityTasks() : Flow<List<TaskEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(taskEntity: TaskEntity): Long
 

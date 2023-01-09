@@ -35,4 +35,13 @@
             android:name="taskId"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/priorityTasksFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.task.PriorityTasksFragment"
+        android:label="fragment_priority_tasks"
+        tools:layout="@layout/fragment_priority_tasks" >
+        <action
+            android:id="@+id/action_priorityFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 </navigation>

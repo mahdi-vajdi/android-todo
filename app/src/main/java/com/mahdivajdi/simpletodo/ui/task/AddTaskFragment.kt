@@ -1,13 +1,15 @@
 package com.mahdivajdi.simpletodo.ui.task
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.R
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
@@ -16,6 +18,7 @@ import com.mahdivajdi.simpletodo.databinding.FragmentAddTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
 import com.mahdivajdi.simpletodo.domain.model.Task
 import java.time.Instant
+import kotlin.math.log
 
 class AddTaskFragment : BottomSheetDialogFragment() {
 
@@ -32,6 +35,9 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     private val binding: FragmentAddTaskBinding get() = _binding!!
 
     private lateinit var spinnerAdapter: ArrayAdapter<Category>
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +70,8 @@ class AddTaskFragment : BottomSheetDialogFragment() {
         binding.buttonAddTaskSave.setOnClickListener {
             val instant = Instant.now()
             val spinner = binding.spinnerAddTaskCategory
+            val priorityCheckBox: MaterialCheckBox = binding.checkBoxAddTaskPriority
+            Log.d("checkbox",binding.checkBoxAddTaskPriority.isChecked.toString())
             val task = Task(
                 taskCategoryId = (spinner.getItemAtPosition(spinner.selectedItemPosition) as Category).categoryId,
                 title = binding.editTextAddTaskTitle.text.toString(),
@@ -71,7 +79,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                 dateModified = instant.epochSecond,
                 state = false,
                 schedule = 0,
-                priority = binding.checkBoxAddTaskPriority.isSelected
+                priority = binding.checkBoxAddTaskPriority.isChecked
             )
             taskViewModel.insertTask(task)
             dismiss()

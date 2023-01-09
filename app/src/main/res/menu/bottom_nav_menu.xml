@@ -9,7 +9,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/placeholder1"
+        android:id="@+id/priorityTasksFragment"
         android:icon="@drawable/ic_round_star_filled_24"
         android:title="Important"
         app:showAsAction="always" />
