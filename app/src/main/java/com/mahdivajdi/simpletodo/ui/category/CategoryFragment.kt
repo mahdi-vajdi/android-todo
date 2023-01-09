@@ -67,9 +67,6 @@ class CategoryFragment : Fragment() {
 
         category.observe(viewLifecycleOwner) { category ->
             Log.d("viewpager", "onViewCreated: $category")
-            binding.apply {
-                textViewCategoryTitle.text = category.title
-            }
             binding.buttonCategoryDelete.setOnClickListener {
                 taskViewModel.deleteCategory(category.categoryId)
             }
