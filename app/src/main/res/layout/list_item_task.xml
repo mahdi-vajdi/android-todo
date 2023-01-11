@@ -44,10 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView_taskItem_title"
-            app:layout_constraintTop_toBottomOf="@+id/textView_taskItem_title" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_taskItem_title"
+            tools:text="Tomorrow"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
