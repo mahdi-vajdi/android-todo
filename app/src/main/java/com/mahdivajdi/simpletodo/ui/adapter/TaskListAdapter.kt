@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahdivajdi.simpletodo.databinding.ListItemTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
+import java.time.LocalDate
 
 class TaskListAdapter(private val onItemClicked: (Long) -> Unit) :
     ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback) {
@@ -29,11 +30,13 @@ class TaskListAdapter(private val onItemClicked: (Long) -> Unit) :
 
         fun bind(task: Task, onItemClicked: (Long) -> Unit) {
             binding.apply {
-                textViewTaskItemId.text = task.taskId.toString()
+                checkBoxTaskItemState.isChecked = task.state
                 textViewTaskItemTitle.text = task.title
-                textViewTaskItemTimestamp.text = task.dateModified.toString()
-                textViewTaskItemDescription.text = task.detail
-                textViewTaskItemDone.text = task.state.toString()
+                textViewTaskItemDueDate.text = task.dueDate.let {
+                    if (it == 0L) ""
+                    else LocalDate.ofEpochDay(it).toString()
+                }
+                checkBoxTaskItemPriority.isChecked = task.priority
             }
             itemView.setOnClickListener { onItemClicked(task.taskId) }
         }
