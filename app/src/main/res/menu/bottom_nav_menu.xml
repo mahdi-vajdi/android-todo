@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/categoriesFragment"
-        android:icon="@drawable/ic_round_tasks_24"
+        android:icon="@drawable/ic_round_home_24"
         android:title="All"
         app:showAsAction="always" />
 
@@ -27,7 +27,7 @@
 
     <item
         android:id="@+id/tomorrowTasksFragment"
-        android:icon="@drawable/ic_round_tomorrow_24"
+        android:icon="@drawable/ic_round_calendar_day_24"
         android:title="Tomorrow"
         app:showAsAction="always" />
 
