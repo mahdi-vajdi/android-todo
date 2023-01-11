@@ -1,7 +1,6 @@
 package com.mahdivajdi.simpletodo.data.local.mapper
 
 import com.mahdivajdi.simpletodo.data.local.entity.TaskEntity
-import com.mahdivajdi.simpletodo.data.local.mapper.TaskMapper.toEntity
 import com.mahdivajdi.simpletodo.domain.model.Task
 
 object TaskMapper {
@@ -13,7 +12,7 @@ object TaskMapper {
         detail = this.detail,
         dateModified = this.dateModified,
         state = this.state,
-        schedule = this.schedule,
+        dueDate = this.dueDate,
         priority = this.priority
     )
 
@@ -24,7 +23,7 @@ object TaskMapper {
         detail = this.detail,
         dateModified = this.dateModified,
         state = this.state,
-        schedule = this.schedule,
+        dueDate = this.dueDate,
         priority = this.priority
     )
 }

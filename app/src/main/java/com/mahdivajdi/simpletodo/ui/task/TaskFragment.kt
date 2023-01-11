@@ -63,7 +63,7 @@ class TaskFragment : Fragment() {
                         detail = task.detail,
                         dateModified = task.dateModified,
                         state = true,
-                        schedule = task.schedule,
+                        dueDate = task.dueDate,
                         priority = task.priority
                     ))
                 }

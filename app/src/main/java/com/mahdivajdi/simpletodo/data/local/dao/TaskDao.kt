@@ -3,7 +3,6 @@ package com.mahdivajdi.simpletodo.data.local.dao
 import androidx.room.*
 import com.mahdivajdi.simpletodo.data.local.entity.TASK_TABLE_NAME
 import com.mahdivajdi.simpletodo.data.local.entity.TaskEntity
-import com.mahdivajdi.simpletodo.domain.model.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,6 +16,9 @@ interface TaskDao {
 
     @Query("SELECT * FROM $TASK_TABLE_NAME WHERE priority = 1")
     fun getPriorityTasks() : Flow<List<TaskEntity>>
+
+    @Query("SELECT * FROM $TASK_TABLE_NAME WHERE dueDate = :date")
+    fun getTasksWithDate(date: Long): Flow<List<TaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(taskEntity: TaskEntity): Long

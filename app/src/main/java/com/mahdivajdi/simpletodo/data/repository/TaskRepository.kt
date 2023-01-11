@@ -27,6 +27,12 @@ class TaskRepository(private val dataSource: TaskDao) {
         }
     }
 
+    fun getTasksWithDate(date: Long) = dataSource.getTasksWithDate(date).map { taskList ->
+        taskList.map {
+            it.toDomain()
+        }
+    }
+
     suspend fun insertTask(task: Task) =
         dataSource.insertTask(task.toEntity())
 

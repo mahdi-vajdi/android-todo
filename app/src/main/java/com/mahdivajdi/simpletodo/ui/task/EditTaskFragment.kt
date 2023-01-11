@@ -56,7 +56,7 @@ class EditTaskFragment : Fragment() {
                         detail = editTextEditTaskDescription.text.toString(),
                         dateModified = task.dateModified,
                         state = task.state,
-                        schedule = 0,
+                        dueDate = 0,
                         priority = false
                     ))
                     findNavController().popBackStack()

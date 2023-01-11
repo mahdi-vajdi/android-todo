@@ -20,7 +20,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/placeholder2"
+        android:id="@+id/todayTasksFragment"
         android:icon="@drawable/ic_round_today_24"
         android:title="Today"
         app:showAsAction="always" />

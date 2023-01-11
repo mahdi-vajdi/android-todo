@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItem_dueDate_today"
+        android:title="Today" />
+    <item
+        android:id="@+id/menuItem_dueDate_tomorrow"
+        android:title="Tomorrow" />
+    <item
+        android:id="@+id/menuItem_dueDate_nextWeek"
+        android:title="Next Week" />
+    <item
+        android:id="@+id/menuItem_dueDate_custom"
+        android:title="Custom" />
+</menu>

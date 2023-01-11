@@ -22,6 +22,9 @@ class MainViewModel(
     fun getPriorityTasks(): LiveData<List<Task>> =
         taskRepository.getPriorityTasks().asLiveData()
 
+    fun getTasksWithDate(date: Long): LiveData<List<Task>> =
+        taskRepository.getTasksWithDate(date).asLiveData()
+
     fun insertTask(task: Task) = viewModelScope.launch {
         taskRepository.insertTask(task)
     }

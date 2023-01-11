@@ -44,4 +44,12 @@
             android:id="@+id/action_priorityFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/todayTasksFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.task.TodayTasksFragment"
+        android:label="TodayTasksFragment" >
+        <action
+            android:id="@+id/action_todayTasksFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 </navigation>

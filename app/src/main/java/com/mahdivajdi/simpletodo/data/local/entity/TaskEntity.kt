@@ -14,6 +14,6 @@ data class TaskEntity(
     val detail: String,
     @ColumnInfo(name = "date_modified") val dateModified: Long,
     val state: Boolean,
-    val schedule: Long,
+    val dueDate: Long,
     val priority: Boolean,
 )

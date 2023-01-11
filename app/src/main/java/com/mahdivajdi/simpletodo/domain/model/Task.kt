@@ -7,7 +7,7 @@ data class Task(
     val detail: String,
     val dateModified: Long,
     val state: Boolean = false,
-    val schedule: Long,
+    val dueDate: Long,
     val priority: Boolean,
 )
 
