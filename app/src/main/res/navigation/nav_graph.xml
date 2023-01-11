@@ -47,9 +47,19 @@
     <fragment
         android:id="@+id/todayTasksFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.TodayTasksFragment"
-        android:label="TodayTasksFragment" >
+        android:label="TodayTasksFragment"
+        tools:layout="@layout/fragment_today_tasks">
         <action
             android:id="@+id/action_todayTasksFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tomorrowTasksFragment"
+        android:name="com.mahdivajdi.simpletodo.ui.task.TomorrowTasksFragment"
+        android:label="TomorrowTasksFragment"
+        tools:layout="@layout/fragment_tomorrow_tasks">
+        <action
+            android:id="@+id/action_tomorrowTasksFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
     </fragment>
 </navigation>
