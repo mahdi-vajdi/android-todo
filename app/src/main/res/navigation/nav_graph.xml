@@ -22,9 +22,6 @@
         <action
             android:id="@+id/action_categoriesFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
-        <action
-            android:id="@+id/action_categoriesFragment_to_editTaskFragment"
-            app:destination="@id/editTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskFragment"
@@ -34,6 +31,9 @@
         <argument
             android:name="taskId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_taskFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/priorityTasksFragment"

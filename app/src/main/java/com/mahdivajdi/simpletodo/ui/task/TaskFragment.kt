@@ -16,7 +16,6 @@ import com.mahdivajdi.simpletodo.databinding.FragmentTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
 import com.mahdivajdi.simpletodo.ui.MainViewModel
 import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
-import com.mahdivajdi.simpletodo.ui.category.CategoriesFragmentDirections
 
 
 class TaskFragment : Fragment() {
@@ -71,7 +70,7 @@ class TaskFragment : Fragment() {
                     mainViewModel.deleteTask(task.taskId)
                 }
                 buttonTaskEdit.setOnClickListener {
-                    val action = CategoriesFragmentDirections.actionCategoriesFragmentToEditTaskFragment(task.taskId)
+                    val action = TaskFragmentDirections.actionTaskFragmentToEditTaskFragment(task.taskId)
                     view.findNavController().navigate(action)
                 }
             }
