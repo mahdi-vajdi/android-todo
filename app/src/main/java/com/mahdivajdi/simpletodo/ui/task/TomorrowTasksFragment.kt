@@ -44,10 +44,18 @@ class TomorrowTasksFragment : Fragment() {
         binding.executePendingBindings()
 
         // Initiate recyclerview
-        val tasksListAdapter = TaskListAdapter {
-            val action = TomorrowTasksFragmentDirections.actionTomorrowTasksFragmentToTaskFragment(it)
-            view.findNavController().navigate(action)
-        }
+        val tasksListAdapter = TaskListAdapter(
+            onItemClicked = {
+                val action = TomorrowTasksFragmentDirections.actionTomorrowTasksFragmentToTaskFragment(it)
+                view.findNavController().navigate(action)
+            },
+            toggleTaskState = {
+                mainViewModel.toggleTaskState(it)
+            },
+            toggleTaskPriority = {
+                mainViewModel.toggleTaskPriority(it)
+            }
+        )
         binding.recyclerViewTomorrowTasks.adapter = tasksListAdapter
         binding.recyclerViewTomorrowTasks.layoutManager = LinearLayoutManager(requireContext())
 

@@ -58,10 +58,18 @@ class CategoryFragment : Fragment() {
         binding.executePendingBindings()
 
         // Initiate recyclerview
-        taskListAdapter = TaskListAdapter { taskId ->
-            val action = CategoriesFragmentDirections.actionCategoriesFragmentToTaskFragment(taskId)
-            view.findNavController().navigate(action)
-        }
+        taskListAdapter = TaskListAdapter(
+            onItemClicked = { taskId ->
+                val action = CategoriesFragmentDirections.actionCategoriesFragmentToTaskFragment(taskId)
+                view.findNavController().navigate(action)
+            },
+            toggleTaskState = {
+                mainViewModel.toggleTaskState(it)
+            },
+            toggleTaskPriority = {
+                mainViewModel.toggleTaskPriority(it)
+            }
+        )
         binding.recyclerViewCategoryTaskList.adapter = taskListAdapter
         binding.recyclerViewCategoryTaskList.layoutManager = LinearLayoutManager(requireContext())
 
@@ -71,7 +79,8 @@ class CategoryFragment : Fragment() {
                 mainViewModel.deleteCategory(category.categoryId)
             }
             binding.buttonCategoryEdit.setOnClickListener {
-                EditCategoryFragment(category.categoryId).show(childFragmentManager, "edit_category")
+                EditCategoryFragment(category.categoryId).show(childFragmentManager,
+                    "edit_category")
             }
             mainViewModel.getTaskByCategoryId(category.categoryId).observe(viewLifecycleOwner) {
                 taskListAdapter.submitList(it)
@@ -86,6 +95,7 @@ class CategoryFragment : Fragment() {
 
     companion object {
         private const val CATEGORY_ID_ARG = "category_id"
+
         @JvmStatic
         fun newInstance(categoryId: Long) = CategoryFragment().apply {
             arguments = Bundle().apply {

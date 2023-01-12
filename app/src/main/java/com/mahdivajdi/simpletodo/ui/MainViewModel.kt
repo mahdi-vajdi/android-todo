@@ -33,6 +33,14 @@ class MainViewModel(
         taskRepository.updateTask(task)
     }
 
+    fun toggleTaskState(taskId: Long) = viewModelScope.launch {
+        taskRepository.toggleTaskState(taskId)
+    }
+
+    fun toggleTaskPriority(taskId: Long) = viewModelScope.launch {
+        taskRepository.toggleTaskPriority(taskId)
+    }
+
     fun deleteTask(taskId: Long) = viewModelScope.launch {
         taskRepository.deleteTask(taskId)
     }

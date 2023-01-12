@@ -19,7 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Do laundry" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox_taskItem_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox_taskItem_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

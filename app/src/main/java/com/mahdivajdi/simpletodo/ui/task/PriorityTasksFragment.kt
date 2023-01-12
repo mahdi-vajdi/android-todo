@@ -44,10 +44,18 @@ class PriorityTasksFragment : Fragment() {
         binding.executePendingBindings()
 
         // Initiate recyclerview
-        val tasksListAdapter = TaskListAdapter {
-            val action = PriorityTasksFragmentDirections.actionPriorityFragmentToTaskFragment(it)
-            view.findNavController().navigate(action)
-        }
+        val tasksListAdapter = TaskListAdapter(
+            onItemClicked = {
+                val action = PriorityTasksFragmentDirections.actionPriorityFragmentToTaskFragment(it)
+                view.findNavController().navigate(action)
+            },
+            toggleTaskState = {
+                mainViewModel.toggleTaskState(it)
+            },
+            toggleTaskPriority = {
+                mainViewModel.toggleTaskPriority(it)
+            }
+        )
         binding.recyclerViewPriorityTasks.adapter = tasksListAdapter
         binding.recyclerViewPriorityTasks.layoutManager = LinearLayoutManager(requireContext())
 

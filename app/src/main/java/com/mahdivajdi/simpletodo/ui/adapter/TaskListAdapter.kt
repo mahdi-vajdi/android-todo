@@ -9,9 +9,12 @@ import com.mahdivajdi.simpletodo.databinding.ListItemTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
 import java.time.LocalDate
 
-class TaskListAdapter(private val onItemClicked: (Long) -> Unit) :
+class TaskListAdapter(
+    private val onItemClicked: (Long) -> Unit,
+    private val toggleTaskState: (Long) -> Unit,
+    private val toggleTaskPriority: (Long) -> Unit,
+) :
     ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback) {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(
@@ -20,27 +23,40 @@ class TaskListAdapter(private val onItemClicked: (Long) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(getItem(position), onItemClicked)
+        holder.bind(getItem(position), onItemClicked, toggleTaskState, toggleTaskPriority)
     }
 
     class TaskViewHolder(
-        private val binding: ListItemTaskBinding
+        private val binding: ListItemTaskBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-
-        fun bind(task: Task, onItemClicked: (Long) -> Unit) {
+        fun bind(
+            task: Task,
+            onItemClicked: (Long) -> Unit,
+            toggleTaskState: (Long) -> Unit,
+            toggleTaskPriority: (Long) -> Unit,
+        ) {
             binding.apply {
-                checkBoxTaskItemState.isChecked = task.state
                 textViewTaskItemTitle.text = task.title
                 textViewTaskItemDueDate.text = task.dueDate.let {
                     if (it == 0L) ""
                     else LocalDate.ofEpochDay(it).toString()
                 }
+
+                // State checkbox
+                checkBoxTaskItemState.isChecked = task.state
+                checkBoxTaskItemState.setOnClickListener {
+                    toggleTaskState(task.taskId)
+                }
+
+                // Priority Checkbox
                 checkBoxTaskItemPriority.isChecked = task.priority
+                checkBoxTaskItemPriority.setOnClickListener {
+                    toggleTaskPriority(task.taskId)
+                }
             }
             itemView.setOnClickListener { onItemClicked(task.taskId) }
         }
-
     }
 
     companion object {
