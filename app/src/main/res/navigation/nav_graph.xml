@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/editTaskFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.EditTaskFragment"
-        android:label="EditTaskFragment"
+        android:label="Edit Task"
         tools:layout="@layout/fragment_edit_task">
         <argument
             android:name="taskId"
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="com.mahdivajdi.simpletodo.ui.category.CategoriesFragment"
-        android:label="CategoriesFragment"
-        tools:layout="@layout/fragment_categories" >
+        android:label="All Tasks"
+        tools:layout="@layout/fragment_categories">
         <action
             android:id="@+id/action_categoriesFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.TaskFragment"
-        android:label="TaskFragment"
+        android:label="Task"
         tools:layout="@layout/fragment_task">
         <argument
             android:name="taskId"
@@ -38,8 +38,8 @@
     <fragment
         android:id="@+id/priorityTasksFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.PriorityTasksFragment"
-        android:label="fragment_priority_tasks"
-        tools:layout="@layout/fragment_priority_tasks" >
+        android:label="Importatnt Tasks"
+        tools:layout="@layout/fragment_priority_tasks">
         <action
             android:id="@+id/action_priorityFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/todayTasksFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.TodayTasksFragment"
-        android:label="TodayTasksFragment"
+        android:label="Tasks Due Today"
         tools:layout="@layout/fragment_today_tasks">
         <action
             android:id="@+id/action_todayTasksFragment_to_taskFragment"
@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/tomorrowTasksFragment"
         android:name="com.mahdivajdi.simpletodo.ui.task.TomorrowTasksFragment"
-        android:label="TomorrowTasksFragment"
+        android:label="Tasks Due Tomorrow"
         tools:layout="@layout/fragment_tomorrow_tasks">
         <action
             android:id="@+id/action_tomorrowTasksFragment_to_taskFragment"

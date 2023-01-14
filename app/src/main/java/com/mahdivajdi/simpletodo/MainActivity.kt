@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mahdivajdi.simpletodo.databinding.ActivityMainBinding
@@ -24,9 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         // Set up toolbar
         setSupportActionBar(binding.toolbar)
-        /*val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.categoriesFragment, )*/
-        setupActionBarWithNavController(navController)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.categoriesFragment,
+            R.id.priorityTasksFragment,
+            R.id.todayTasksFragment,
+            R.id.tomorrowTasksFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Set up bottom nav
         binding.bottomNavigationBar.background = null
