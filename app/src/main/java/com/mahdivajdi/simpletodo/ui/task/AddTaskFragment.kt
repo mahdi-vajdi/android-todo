@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
@@ -39,7 +40,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     private var _binding: FragmentAddTaskBinding? = null
     private val binding: FragmentAddTaskBinding get() = _binding!!
 
-    private lateinit var spinnerAdapter: ArrayAdapter<Category>
+    private lateinit var categoryMenuAdapter: ArrayAdapter<Category>
 
     // value of the optional due date property that user can choose
     private var date: Long = 0
@@ -61,18 +62,26 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initiate spinner
-        spinnerAdapter =
-            ArrayAdapter<Category>(requireContext(), android.R.layout.simple_spinner_item)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerAddTaskCategory.adapter = spinnerAdapter
-        // get list for category names and ids
-        mainViewModel.getCategories().observe(this) { categories ->
-            spinnerAdapter.addAll(categories)
-            spinnerAdapter.notifyDataSetChanged()
+        // Initiate category dropdown menu
+        categoryMenuAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item)
+        val categoryMenu = binding.textFieldAddTaskCategoryMenu.editText as? AutoCompleteTextView
+        categoryMenu?.setAdapter(categoryMenuAdapter)
+
+        // Get selected item from menu
+        var selectedCategoryId: Long? = 0
+        categoryMenu?.setOnItemClickListener { _, _, position, _ ->
+            selectedCategoryId = categoryMenuAdapter.getItem(position)?.categoryId
         }
 
-        binding.buttonAddTaskSchedule.setOnClickListener {
+        // Get list for category names and ids
+        mainViewModel.getCategories().observe(this) { categoryList ->
+            categoryMenuAdapter.addAll(categoryList)
+            categoryMenuAdapter.notifyDataSetChanged()
+            selectedCategoryId = categoryList[0].categoryId
+            categoryMenu?.setText(categoryList[0].title, false)
+        }
+
+        binding.buttonAddTaskDueDate.setOnClickListener {
             PopupMenu(requireContext(), it).apply {
                 setOnMenuItemClickListener(this@AddTaskFragment)
                 inflate(R.menu.due_date_menu)
@@ -82,11 +91,10 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
 
         binding.buttonAddTaskSave.setOnClickListener {
             val instant = Instant.now()
-            val spinner = binding.spinnerAddTaskCategory
             val task = Task(
-                taskCategoryId = (spinner.getItemAtPosition(spinner.selectedItemPosition) as Category).categoryId,
-                title = binding.editTextAddTaskTitle.text.toString(),
-                detail = binding.editTextAddTaskDetail.text.toString(),
+                taskCategoryId = selectedCategoryId ?: 0, // TODO: Fix the 0 value passed as categoryId
+                title = binding.editTextAddTaskTitle.editText?.text.toString(),
+                detail = binding.editTextAddTaskDetail.editText?.text.toString(),
                 dateModified = instant.epochSecond,
                 state = false,
                 dueDate = date,

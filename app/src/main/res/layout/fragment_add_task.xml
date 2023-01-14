@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,8 +21,9 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="8dp" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editText_addTask_title"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -30,10 +32,16 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
             app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editText_addTask_detail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -42,56 +50,89 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
             app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
-            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_title" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_title">
 
-        <ImageButton
-            android:id="@+id/button_addTask_save"
-            style="@android:style/Widget.Material.ImageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:background="#2196F3"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
-            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail"
-            app:srcCompat="@drawable/ic_round_arrow_upward_24"
-            app:tint="#FFFFFF" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button_addTask_schedule"
+            android:id="@+id/button_addTask_dueDate"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Set due date"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/button_addTask_reminder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
+
+        <Button
+            android:id="@+id/button_addTask_reminder"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Remind me"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_addTask_3"
+            app:layout_constraintStart_toEndOf="@+id/button_addTask_dueDate"
+            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField_addTask_categoryMenu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Remind Me"
-            android:textAllCaps="false"
-            app:icon="@drawable/ic_round_time_24"
+            android:hint="Category"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox_addTask_priority"
-            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
-            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
+            app:layout_constraintEnd_toEndOf="@+id/button_addTask_dueDate"
+            app:layout_constraintStart_toStartOf="@+id/button_addTask_dueDate"
+            app:layout_constraintTop_toBottomOf="@+id/button_addTask_dueDate"
+            tools:layout_width="180dp">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox_addTask_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:button="@drawable/priority_checkbox"
-            app:checkedState="unchecked"
+            android:buttonTint="@color/purple_500"
+            app:checkedState="checked"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_addTask_save"
-            app:layout_constraintTop_toBottomOf="@+id/editText_addTask_detail" />
+            app:layout_constraintStart_toStartOf="@+id/button_addTask_reminder"
+            app:layout_constraintTop_toBottomOf="@+id/button_addTask_reminder" />
 
-        <Spinner
-            android:id="@+id/spinner_addTask_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/button_addTask_schedule"
-            app:layout_constraintEnd_toStartOf="@+id/button_addTask_schedule"
-            app:layout_constraintStart_toStartOf="@+id/guideline_addTask_4"
-            app:layout_constraintTop_toTopOf="@+id/button_addTask_schedule" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_addTask_save"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/add_task_button"
+            android:padding="6dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/button_addTask_reminder"
+            app:layout_constraintTop_toBottomOf="@+id/button_addTask_reminder"
+            app:srcCompat="@drawable/ic_round_arrow_upward_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
