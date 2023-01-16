@@ -26,11 +26,20 @@ interface TaskDao {
     @Update
     suspend fun updateTask(taskEntity: TaskEntity)
 
+    @Query("UPDATE $TASK_TABLE_NAME SET title = :title WHERE task_id = :taskId")
+    suspend fun updateTaskTitle(taskId: Long, title: String)
+
+    @Query("UPDATE $TASK_TABLE_NAME SET detail = :detail WHERE task_id = :taskId")
+    suspend fun updateTaskDetail(taskId: Long, detail: String)
+
     @Query("UPDATE $TASK_TABLE_NAME SET state = NOT state WHERE task_id = :taskId")
     suspend fun toggleTaskState(taskId: Long)
 
     @Query("UPDATE $TASK_TABLE_NAME SET priority = NOT priority WHERE task_id = :taskId")
     suspend fun toggleTaskPriority(taskId: Long)
+
+    @Query("UPDATE $TASK_TABLE_NAME SET dueDate = :dueDate WHERE task_id = :taskId")
+    suspend fun updateDueDate(taskId: Long, dueDate: Long)
 
     @Query("DELETE FROM $TASK_TABLE_NAME WHERE task_id = :taskId")
     suspend fun deleteTask(taskId: Long)

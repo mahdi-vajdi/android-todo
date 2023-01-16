@@ -42,8 +42,17 @@ class TaskRepository(private val dataSource: TaskDao) {
     suspend fun toggleTaskState(taskId: Long) =
         dataSource.toggleTaskState(taskId)
 
+    suspend fun updateTaskTitle(taskId: Long, title: String) =
+        dataSource.updateTaskTitle(taskId, title)
+
+    suspend fun updateTaskDetail(taskId: Long, detail: String) =
+        dataSource.updateTaskDetail(taskId, detail)
+
     suspend fun toggleTaskPriority(taskId: Long) =
         dataSource.toggleTaskPriority(taskId)
+
+    suspend fun updateDueDate(taskId: Long, dueDate: Long) =
+        dataSource.updateDueDate(taskId, dueDate)
 
     suspend fun deleteTask(taskId: Long) =
         dataSource.deleteTask(taskId)

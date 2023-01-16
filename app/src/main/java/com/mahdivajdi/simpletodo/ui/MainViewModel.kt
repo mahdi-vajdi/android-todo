@@ -33,12 +33,23 @@ class MainViewModel(
         taskRepository.updateTask(task)
     }
 
+    fun updateTaskTitle(taskId: Long, title: String) = viewModelScope.launch {
+        taskRepository.updateTaskTitle(taskId, title)
+    }
+
+    fun updateTaskDetail(taskId: Long, detail: String) = viewModelScope.launch {
+        taskRepository.updateTaskDetail(taskId, detail)
+    }
     fun toggleTaskState(taskId: Long) = viewModelScope.launch {
         taskRepository.toggleTaskState(taskId)
     }
 
     fun toggleTaskPriority(taskId: Long) = viewModelScope.launch {
         taskRepository.toggleTaskPriority(taskId)
+    }
+
+    fun updateDueDate(taskId: Long, dueDate: Long) = viewModelScope.launch {
+        taskRepository.updateDueDate(taskId, dueDate)
     }
 
     fun deleteTask(taskId: Long) = viewModelScope.launch {

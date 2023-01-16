@@ -13,80 +13,186 @@
             android:id="@+id/guideline_task_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintGuide_begin="8dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_task_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_begin="394dp" />
+            app:layout_constraintGuide_end="8dp" />
 
-        <TextView
-            android:id="@+id/textView_task_title"
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkBox_task_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="@+id/textField_task_title"
+            app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
+            app:layout_constraintTop_toTopOf="@+id/textField_task_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField_task_title"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            tools:text="Task 1"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
-            app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/checkBox_task_priority"
+            app:layout_constraintStart_toEndOf="@+id/checkBox_task_state"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView_task_description"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Title"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                tools:text="Task 1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkBox_task_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/priority_checkbox"
+            android:buttonTint="@color/purple_500"
+            app:layout_constraintBottom_toBottomOf="@+id/textField_task_title"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
+            app:layout_constraintTop_toTopOf="@+id/textField_task_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField_task_detail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
             app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_task_title"
-            tools:text="Task 1 description" />
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/textField_task_title"
+            app:startIconDrawable="@drawable/ic_round_subject_24">
 
-        <TextView
-            android:id="@+id/textView_task_timestamp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add Title"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                tools:text="Task 1 description"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField_task_dueDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
             app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_task_description"
-            tools:text="Dec 22, 2022  14:06" />
+            app:layout_constraintTop_toBottomOf="@+id/textField_task_detail"
+            app:startIconDrawable="@drawable/ic_round_today_24">
 
-        <Button
-            android:id="@+id/button_task_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Edit"
-            app:layout_constraintBottom_toBottomOf="@+id/button_task_delete"
-            app:layout_constraintEnd_toStartOf="@+id/button_task_done"
-            app:layout_constraintStart_toEndOf="@+id/button_task_delete"
-            app:layout_constraintTop_toTopOf="@+id/button_task_delete" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none|textNoSuggestions"
+                android:text="Set due date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textIsSelectable="true"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/button_task_done"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField_task_remindMe"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Mark as done"
-            app:layout_constraintBottom_toBottomOf="@+id/button_task_edit"
-            app:layout_constraintStart_toEndOf="@+id/button_task_edit"
-            app:layout_constraintTop_toTopOf="@+id/button_task_edit"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/button_task_delete"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Delete"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
             app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_task_timestamp" />
+            app:layout_constraintTop_toBottomOf="@+id/textField_task_dueDate"
+            app:startIconDrawable="@drawable/ic_round_notifications_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none|textNoSuggestions"
+                android:text="Remind me"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textIsSelectable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField_task_repeat"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
+            app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
+            app:layout_constraintTop_toBottomOf="@+id/textField_task_remindMe"
+            app:startIconDrawable="@drawable/ic_round_event_repeat_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none|textNoSuggestions"
+                android:text="Repeat"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textIsSelectable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView_task_dateCreated"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView_task_delete"
+            app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
+            app:layout_constraintTop_toTopOf="@+id/imageView_task_delete"
+            tools:text="Date created: Wednesday, Jan 11, 2023" />
+
+        <ImageView
+            android:id="@+id/imageView_task_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
+            app:layout_constraintTop_toBottomOf="@+id/textField_task_repeat"
+            app:srcCompat="@drawable/ic_round_delete_24" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
