@@ -99,7 +99,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline_task_2"
             app:layout_constraintStart_toStartOf="@+id/guideline_task_1"
             app:layout_constraintTop_toBottomOf="@+id/textField_task_detail"
-            app:startIconDrawable="@drawable/ic_round_today_24">
+            app:startIconDrawable="@drawable/ic_round_calendar_day_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

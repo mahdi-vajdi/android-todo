@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/priorityTasksFragment"
-        android:icon="@drawable/ic_round_star_filled_24"
+        android:icon="@drawable/ic_round_star_36"
         android:title="Important"
         app:showAsAction="always" />
 
@@ -21,13 +21,13 @@
 
     <item
         android:id="@+id/todayTasksFragment"
-        android:icon="@drawable/ic_round_today_24"
+        android:icon="@drawable/ic_round_calendar_day_24"
         android:title="Today"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/tomorrowTasksFragment"
-        android:icon="@drawable/ic_round_calendar_day_24"
+        android:icon="@drawable/ic_round_calendar_24"
         android:title="Tomorrow"
         app:showAsAction="always" />
 
