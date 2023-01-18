@@ -21,6 +21,13 @@ class TaskRepository(private val dataSource: TaskDao) {
            it.toDomain()
         }
 
+    fun getTasksByCategoryId(categoryId: Long) =
+        dataSource.getTasksWithCategoryId(categoryId).map { taskList ->
+            taskList.map { taskEntity ->
+                taskEntity.toDomain()
+            }
+        }
+
     fun getPriorityTasks() = dataSource.getPriorityTasks().map { taskList ->
         taskList.map {
             it.toDomain()

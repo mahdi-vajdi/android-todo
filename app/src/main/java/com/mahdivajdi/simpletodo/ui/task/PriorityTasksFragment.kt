@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
@@ -57,11 +56,9 @@ class PriorityTasksFragment : Fragment() {
             }
         )
         binding.recyclerViewPriorityTasks.adapter = tasksListAdapter
-        binding.recyclerViewPriorityTasks.layoutManager = LinearLayoutManager(requireContext())
 
         mainViewModel.getPriorityTasks().observe(viewLifecycleOwner) { taskList ->
             tasksListAdapter.submitList(taskList)
-
         }
     }
 

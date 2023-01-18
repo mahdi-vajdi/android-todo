@@ -20,6 +20,9 @@ interface TaskDao {
     @Query("SELECT * FROM $TASK_TABLE_NAME WHERE dueDate = :date")
     fun getTasksWithDate(date: Long): Flow<List<TaskEntity>>
 
+    @Query("SELECT * FROM $TASK_TABLE_NAME WHERE task_category_id = :categoryId")
+    fun getTasksWithCategoryId(categoryId: Long) : Flow<List<TaskEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(taskEntity: TaskEntity): Long
 

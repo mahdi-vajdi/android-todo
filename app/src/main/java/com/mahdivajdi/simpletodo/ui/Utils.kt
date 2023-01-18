@@ -13,7 +13,9 @@ fun timeStampToDate(timeStamp: Long): String {
     return dateTime.format(formatter)
 }
 
-fun dueDateString(timeStamp: Long): String {
+fun dueDateString(timeStamp: Long): String? {
+    if (timeStamp == 0L) return null
+
     val today = LocalDate.now()
     val dueDate = LocalDate.ofEpochDay(timeStamp)
     val periodDays = ChronoUnit.DAYS.between(today, dueDate)
@@ -31,3 +33,11 @@ fun dueDateString(timeStamp: Long): String {
         "Due ${dueDate.format(dateFormatter)}"
     }
 }
+
+/*
+@BindingAdapter("listData")
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<Task>?) {
+    Log.d("list_delay", "list data binding adapter function called ")
+    val adapter = recyclerView.adapter as TaskListAdapter
+    adapter.submitList(data)
+}*/

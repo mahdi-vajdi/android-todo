@@ -3,7 +3,6 @@ package com.mahdivajdi.simpletodo.data.repository
 import com.mahdivajdi.simpletodo.data.local.dao.CategoryDao
 import com.mahdivajdi.simpletodo.data.local.mapper.CategoryMapper.toDomain
 import com.mahdivajdi.simpletodo.data.local.mapper.CategoryMapper.toEntity
-import com.mahdivajdi.simpletodo.data.local.mapper.TaskMapper.toDomain
 import com.mahdivajdi.simpletodo.domain.model.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,12 +19,7 @@ class CategoryRepository(private val dataSource: CategoryDao) {
         it.toDomain()
     }
 
-    fun getTasksByCategoryId(categoryId: Long) =
-        dataSource.getCategoryTasks(categoryId).map {
-            it.tasks.map { taskEntity ->
-                taskEntity.toDomain()
-            }
-        }
+
 
     suspend fun insertCategory(category: Category) =
         dataSource.insertCategory(category.toEntity())

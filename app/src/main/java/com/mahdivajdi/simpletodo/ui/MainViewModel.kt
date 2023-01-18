@@ -62,7 +62,7 @@ class MainViewModel(
         categoryRepository.getCategory(categoryId).asLiveData()
 
     fun getTaskByCategoryId(categoryId: Long) =
-        categoryRepository.getTasksByCategoryId(categoryId).asLiveData()
+        taskRepository.getTasksByCategoryId(categoryId).asLiveData()
 
     fun insertCategory(category: Category) = viewModelScope.launch {
         categoryRepository.insertCategory(category)

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
@@ -33,14 +32,12 @@ class CategoryFragment : Fragment() {
 
     private lateinit var category: LiveData<Category>
 
-    private lateinit var taskListAdapter: TaskListAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { arguments ->
-            val categoryId = arguments.getLong(CATEGORY_ID_ARG)
-            category = mainViewModel.getCategory(categoryId)
+            category = mainViewModel.getCategory(arguments.getLong(CATEGORY_ID_ARG))
         }
+
     }
 
     override fun onCreateView(
@@ -49,16 +46,14 @@ class CategoryFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentCategoryBinding.inflate(layoutInflater, container, false)
+        binding.lifecycleOwner = this@CategoryFragment
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.executePendingBindings()
 
-        // Initiate recyclerview
-        taskListAdapter = TaskListAdapter(
+        val adapter = TaskListAdapter(
             onItemClicked = { taskId ->
                 val action = CategoriesFragmentDirections.actionCategoriesFragmentToTaskFragment(taskId)
                 view.findNavController().navigate(action)
@@ -70,8 +65,7 @@ class CategoryFragment : Fragment() {
                 mainViewModel.toggleTaskPriority(it)
             }
         )
-        binding.recyclerViewCategoryTaskList.adapter = taskListAdapter
-        binding.recyclerViewCategoryTaskList.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewCategoryTaskList.adapter = adapter
 
         category.observe(viewLifecycleOwner) { category ->
             Log.d("viewpager", "onViewCreated: $category")
@@ -79,11 +73,13 @@ class CategoryFragment : Fragment() {
                 mainViewModel.deleteCategory(category.categoryId)
             }
             binding.buttonCategoryEdit.setOnClickListener {
-                EditCategoryFragment(category.categoryId).show(childFragmentManager,
-                    "edit_category")
+                EditCategoryFragment(category.categoryId).show(
+                    childFragmentManager,
+                    "edit_category"
+                )
             }
             mainViewModel.getTaskByCategoryId(category.categoryId).observe(viewLifecycleOwner) {
-                taskListAdapter.submitList(it)
+                adapter.submitList(it)
             }
         }
     }

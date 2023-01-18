@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
@@ -57,7 +56,6 @@ class TomorrowTasksFragment : Fragment() {
             }
         )
         binding.recyclerViewTomorrowTasks.adapter = tasksListAdapter
-        binding.recyclerViewTomorrowTasks.layoutManager = LinearLayoutManager(requireContext())
 
         val tomorrow = LocalDate.now().plusDays(1).toEpochDay()
         mainViewModel.getTasksWithDate(tomorrow).observe(viewLifecycleOwner) {

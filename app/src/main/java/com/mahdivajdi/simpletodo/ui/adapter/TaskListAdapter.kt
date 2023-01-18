@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahdivajdi.simpletodo.databinding.ListItemTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
-import java.time.LocalDate
+import com.mahdivajdi.simpletodo.ui.dueDateString
 
 class TaskListAdapter(
     private val onItemClicked: (Long) -> Unit,
@@ -26,9 +26,7 @@ class TaskListAdapter(
         holder.bind(getItem(position), onItemClicked, toggleTaskState, toggleTaskPriority)
     }
 
-    class TaskViewHolder(
-        private val binding: ListItemTaskBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    class TaskViewHolder(val binding: ListItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             task: Task,
@@ -37,23 +35,23 @@ class TaskListAdapter(
             toggleTaskPriority: (Long) -> Unit,
         ) {
             binding.apply {
-                textViewTaskItemTitle.text = task.title
-                textViewTaskItemDueDate.text = task.dueDate.let {
-                    if (it == 0L) ""
-                    else LocalDate.ofEpochDay(it).toString()
-                }
+                // Setup binding variables
+                this.task = task
+                this.executePendingBindings()
 
+                val dueDate = dueDateString(task.dueDate)
+//                textViewTaskItemDueDate.visibility = if (dueDate.isNullOrBlank()) GONE else VISIBLE
+                textViewTaskItemDueDate.text = dueDate
                 // State checkbox
-                checkBoxTaskItemState.isChecked = task.state
                 checkBoxTaskItemState.setOnClickListener {
                     toggleTaskState(task.taskId)
                 }
 
                 // Priority Checkbox
-                checkBoxTaskItemPriority.isChecked = task.priority
                 checkBoxTaskItemPriority.setOnClickListener {
                     toggleTaskPriority(task.taskId)
                 }
+
             }
             itemView.setOnClickListener { onItemClicked(task.taskId) }
         }
