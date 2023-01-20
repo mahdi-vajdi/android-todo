@@ -12,14 +12,14 @@ import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentPriorityTasksBinding
 import com.mahdivajdi.simpletodo.ui.MainViewModel
-import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
+import com.mahdivajdi.simpletodo.ui.MainViewModelFactory
 import com.mahdivajdi.simpletodo.ui.adapter.TaskListAdapter
 
 
 class PriorityTasksFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels {
-        TaskViewModelFactory(
+        MainViewModelFactory(
             TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao())
         )
@@ -48,11 +48,11 @@ class PriorityTasksFragment : Fragment() {
                 val action = PriorityTasksFragmentDirections.actionPriorityFragmentToTaskFragment(it)
                 view.findNavController().navigate(action)
             },
-            toggleTaskState = {
-                mainViewModel.toggleTaskState(it)
+            toggleTaskState = { taskId, isChecked ->
+                mainViewModel.updateTaskState(taskId, isChecked)
             },
-            toggleTaskPriority = {
-                mainViewModel.toggleTaskPriority(it)
+            toggleTaskPriority = { taskId, isChecked ->
+                mainViewModel.updateTaskPriority(taskId, isChecked)
             }
         )
         binding.recyclerViewPriorityTasks.adapter = tasksListAdapter

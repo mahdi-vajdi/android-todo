@@ -18,7 +18,7 @@ class TaskRepository(private val dataSource: TaskDao) {
 
     fun getTask(id: Long) =
         dataSource.getTask(id).map {
-           it.toDomain()
+            it.toDomain()
         }
 
     fun getTasksByCategoryId(categoryId: Long) =
@@ -46,8 +46,8 @@ class TaskRepository(private val dataSource: TaskDao) {
     suspend fun updateTask(task: Task) =
         dataSource.updateTask(task.toEntity())
 
-    suspend fun toggleTaskState(taskId: Long) =
-        dataSource.toggleTaskState(taskId)
+    suspend fun updateTaskState(taskId: Long, state: Boolean) =
+        dataSource.updateTaskState(taskId, state)
 
     suspend fun updateTaskTitle(taskId: Long, title: String) =
         dataSource.updateTaskTitle(taskId, title)
@@ -55,8 +55,8 @@ class TaskRepository(private val dataSource: TaskDao) {
     suspend fun updateTaskDetail(taskId: Long, detail: String) =
         dataSource.updateTaskDetail(taskId, detail)
 
-    suspend fun toggleTaskPriority(taskId: Long) =
-        dataSource.toggleTaskPriority(taskId)
+    suspend fun updateTaskPriority(taskId: Long, priority: Boolean) =
+        dataSource.updateTaskPriority(taskId, priority)
 
     suspend fun updateDueDate(taskId: Long, dueDate: Long) =
         dataSource.updateDueDate(taskId, dueDate)

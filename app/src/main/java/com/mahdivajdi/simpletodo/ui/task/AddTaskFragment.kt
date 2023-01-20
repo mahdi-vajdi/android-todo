@@ -21,7 +21,7 @@ import com.mahdivajdi.simpletodo.databinding.FragmentAddTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
 import com.mahdivajdi.simpletodo.domain.model.Task
 import com.mahdivajdi.simpletodo.ui.MainViewModel
-import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
+import com.mahdivajdi.simpletodo.ui.MainViewModelFactory
 import java.time.Instant
 import java.time.LocalDate
 
@@ -33,7 +33,7 @@ class AddTaskFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetL
     }
 
     private val mainViewModel: MainViewModel by activityViewModels {
-        TaskViewModelFactory(TaskRepository((activity?.application as App).database.taskDao()),
+        MainViewModelFactory(TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao()))
     }
 

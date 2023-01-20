@@ -1,18 +1,21 @@
 package com.mahdivajdi.simpletodo.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.mahdivajdi.simpletodo.databinding.ListItemTaskBinding
 import com.mahdivajdi.simpletodo.domain.model.Task
 import com.mahdivajdi.simpletodo.ui.dueDateString
 
 class TaskListAdapter(
-    private val onItemClicked: (Long) -> Unit,
-    private val toggleTaskState: (Long) -> Unit,
-    private val toggleTaskPriority: (Long) -> Unit,
+    private val onItemClicked: (taskId: Long) -> Unit,
+    private val toggleTaskState: (taskId: Long, isChecked: Boolean) -> Unit,
+    private val toggleTaskPriority: (taskId: Long, isChecked: Boolean) -> Unit,
 ) :
     ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback) {
 
@@ -30,9 +33,9 @@ class TaskListAdapter(
 
         fun bind(
             task: Task,
-            onItemClicked: (Long) -> Unit,
-            toggleTaskState: (Long) -> Unit,
-            toggleTaskPriority: (Long) -> Unit,
+            onItemClicked: (taskId: Long) -> Unit,
+            toggleTaskState: (taskId: Long, isChecked: Boolean) -> Unit,
+            toggleTaskPriority: (taskId: Long, isChecked: Boolean) -> Unit,
         ) {
             binding.apply {
                 // Setup binding variables
@@ -40,16 +43,15 @@ class TaskListAdapter(
                 this.executePendingBindings()
 
                 val dueDate = dueDateString(task.dueDate)
-//                textViewTaskItemDueDate.visibility = if (dueDate.isNullOrBlank()) GONE else VISIBLE
+                textViewTaskItemDueDate.visibility = if (dueDate.isBlank()) GONE else VISIBLE
                 textViewTaskItemDueDate.text = dueDate
                 // State checkbox
                 checkBoxTaskItemState.setOnClickListener {
-                    toggleTaskState(task.taskId)
+                    toggleTaskState(task.taskId, (it as MaterialCheckBox).isChecked)
                 }
-
                 // Priority Checkbox
                 checkBoxTaskItemPriority.setOnClickListener {
-                    toggleTaskPriority(task.taskId)
+                    toggleTaskPriority(task.taskId, (it as MaterialCheckBox).isChecked)
                 }
 
             }

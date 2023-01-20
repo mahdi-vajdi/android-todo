@@ -10,17 +10,12 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.mahdivajdi.simpletodo.App
 import com.mahdivajdi.simpletodo.R
-import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentTaskBinding
-import com.mahdivajdi.simpletodo.domain.model.Task
-import com.mahdivajdi.simpletodo.ui.MainViewModel
-import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
 import com.mahdivajdi.simpletodo.ui.dueDateString
 import com.mahdivajdi.simpletodo.ui.timeStampToDate
 import java.time.LocalDate
@@ -31,18 +26,17 @@ import java.time.temporal.ChronoField
 class TaskFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
     DatePickerDialog.OnDateSetListener {
 
-    private val mainViewModel: MainViewModel by activityViewModels {
+    private val args: TaskFragmentArgs by navArgs()
+
+    private val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory(
             TaskRepository((activity?.application as App).database.taskDao()),
-            CategoryRepository((activity?.application as App).database.categoryDao())
+            args.taskId
         )
     }
 
     private var _binding: FragmentTaskBinding? = null
     private val binding: FragmentTaskBinding get() = _binding!!
-
-    private val args: TaskFragmentArgs by navArgs()
-    private lateinit var task: LiveData<Task>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,61 +44,55 @@ class TaskFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentTaskBinding.inflate(layoutInflater, container, false)
-        task = mainViewModel.getTask(args.taskId)
+        binding.apply {
+            lifecycleOwner = this@TaskFragment
+            viewModel = taskViewModel
+        }
+        binding.executePendingBindings()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.executePendingBindings()
 
-        task.observe(viewLifecycleOwner) { task ->
+        taskViewModel.task.observe(viewLifecycleOwner) { task ->
             binding.apply {
-                checkBoxTaskState.isChecked = task.state
-                checkBoxTaskPriority.isChecked = task.priority
-                textFieldTaskTitle.editText?.setText(task.title)
-                textFieldTaskDetail.editText?.setText(task.detail)
-                if (task.dueDate >= 0) textFieldTaskDueDate.editText?.setText(dueDateString(task.dueDate))
+                textFieldTaskDueDate.editText?.setText(if (task.dueDate > 0) dueDateString(task.dueDate) else "Set due date")
                 // TODO: Set remind me section in this line
                 // TODO: Set repeat section in this line
                 textViewTaskDateCreated.text = "Date created: ${timeStampToDate(task.dateModified)}"
-
-                // Listeners
-                textFieldTaskTitle.editText?.setOnFocusChangeListener { view, hasFocus ->
-                    if (!hasFocus) {
-                        mainViewModel.updateTaskTitle(task.taskId,
-                            textFieldTaskTitle.editText?.text.toString())
-                    }
-                }
-
-                textFieldTaskDetail.editText?.setOnFocusChangeListener { view, hasFocus ->
-                    if (!hasFocus) {
-                        mainViewModel.updateTaskDetail(task.taskId,
-                            textFieldTaskDetail.editText?.text.toString())
-                    }
-                }
-                checkBoxTaskState.setOnClickListener {
-                    mainViewModel.toggleTaskState(task.taskId)
-                }
-                checkBoxTaskPriority.setOnClickListener {
-                    mainViewModel.toggleTaskPriority(task.taskId)
-                }
-                textFieldTaskDueDate.editText?.setOnClickListener {
-                    PopupMenu(requireContext(), it).apply {
-                        setOnMenuItemClickListener(this@TaskFragment)
-                        inflate(R.menu.due_date_menu)
-                        show()
-                    }
-                }
-                textFieldTaskRemindMe.editText?.setOnClickListener { }
-                textFieldTaskRepeat.editText?.setOnClickListener { }
-                imageViewTaskDelete.setOnClickListener {
-                    mainViewModel.deleteTask(task.taskId)
-                }
             }
         }
 
+        binding.apply {
+
+            textFieldTaskTitle.editText?.setOnFocusChangeListener { view, hasFocus ->
+                if (!hasFocus) {
+                    taskViewModel.updateTitle(
+                        textFieldTaskTitle.editText?.text.toString()
+                    )
+                }
+            }
+
+            textFieldTaskDetail.editText?.setOnFocusChangeListener { view, hasFocus ->
+                if (!hasFocus) {
+                    taskViewModel.updateDetail(
+                        textFieldTaskDetail.editText?.text.toString()
+                    )
+                }
+            }
+
+            textFieldTaskDueDate.editText?.setOnClickListener {
+                PopupMenu(requireContext(), it).apply {
+                    setOnMenuItemClickListener(this@TaskFragment)
+                    inflate(R.menu.due_date_menu)
+                    show()
+                }
+            }
+
+            textFieldTaskRemindMe.editText?.setOnClickListener { }
+            textFieldTaskRepeat.editText?.setOnClickListener { }
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -128,11 +116,13 @@ class TaskFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
                 true
             }
             R.id.menuItem_dueDate_custom -> {
-                DatePickerDialog(requireContext(),
+                DatePickerDialog(
+                    requireContext(),
                     this,
                     today.year,
                     today.monthValue - 1,
-                    today.dayOfMonth).show()
+                    today.dayOfMonth
+                ).show()
                 /*
                 Date object gets set in onDateSet() function because
                 datePicker doesn't support chained listener in APIs below 24
@@ -148,8 +138,8 @@ class TaskFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
     }
 
     private fun updateDueDate(dueDate: Long) {
-        task.value?.let {
-            mainViewModel.updateDueDate(it.taskId, dueDate)
+        taskViewModel.task.value?.let {
+            taskViewModel.updateDueDate(it.taskId, dueDate)
         }
     }
 

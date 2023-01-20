@@ -12,12 +12,12 @@ import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.AddCategoryDialogBinding
 import com.mahdivajdi.simpletodo.domain.model.Category
 import com.mahdivajdi.simpletodo.ui.MainViewModel
-import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
+import com.mahdivajdi.simpletodo.ui.MainViewModelFactory
 
 class AddCategoryFragment : DialogFragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels {
-        TaskViewModelFactory(
+        MainViewModelFactory(
             TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao())
         )

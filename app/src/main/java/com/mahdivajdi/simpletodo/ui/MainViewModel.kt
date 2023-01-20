@@ -13,12 +13,6 @@ class MainViewModel(
     private val categoryRepository: CategoryRepository,
 ) : ViewModel() {
 
-    fun getTasks(): LiveData<List<Task>> =
-        taskRepository.getTasks().asLiveData()
-
-    fun getTask(id: Long) =
-        taskRepository.getTask(id).asLiveData()
-
     fun getPriorityTasks(): LiveData<List<Task>> =
         taskRepository.getPriorityTasks().asLiveData()
 
@@ -29,32 +23,14 @@ class MainViewModel(
         taskRepository.insertTask(task)
     }
 
-    fun updateTask(task: Task) = viewModelScope.launch {
-        taskRepository.updateTask(task)
+    fun updateTaskState(taskId: Long, isChecked: Boolean) = viewModelScope.launch {
+        taskRepository.updateTaskState(taskId, isChecked)
     }
 
-    fun updateTaskTitle(taskId: Long, title: String) = viewModelScope.launch {
-        taskRepository.updateTaskTitle(taskId, title)
+    fun updateTaskPriority(taskId: Long, isChecked: Boolean) = viewModelScope.launch {
+        taskRepository.updateTaskPriority(taskId, isChecked)
     }
 
-    fun updateTaskDetail(taskId: Long, detail: String) = viewModelScope.launch {
-        taskRepository.updateTaskDetail(taskId, detail)
-    }
-    fun toggleTaskState(taskId: Long) = viewModelScope.launch {
-        taskRepository.toggleTaskState(taskId)
-    }
-
-    fun toggleTaskPriority(taskId: Long) = viewModelScope.launch {
-        taskRepository.toggleTaskPriority(taskId)
-    }
-
-    fun updateDueDate(taskId: Long, dueDate: Long) = viewModelScope.launch {
-        taskRepository.updateDueDate(taskId, dueDate)
-    }
-
-    fun deleteTask(taskId: Long) = viewModelScope.launch {
-        taskRepository.deleteTask(taskId)
-    }
 
     fun getCategories(): LiveData<List<Category>> = categoryRepository.getCategories().asLiveData()
 
@@ -77,7 +53,7 @@ class MainViewModel(
     }
 }
 
-class TaskViewModelFactory(
+class MainViewModelFactory(
     private val taskRepository: TaskRepository,
     private val categoryRepository: CategoryRepository,
 ) : ViewModelProvider.Factory {

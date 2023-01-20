@@ -19,14 +19,14 @@ import com.mahdivajdi.simpletodo.data.repository.CategoryRepository
 import com.mahdivajdi.simpletodo.data.repository.TaskRepository
 import com.mahdivajdi.simpletodo.databinding.FragmentCategoriesBinding
 import com.mahdivajdi.simpletodo.ui.MainViewModel
-import com.mahdivajdi.simpletodo.ui.TaskViewModelFactory
+import com.mahdivajdi.simpletodo.ui.MainViewModelFactory
 
 
 class CategoriesFragment : Fragment() {
 
 
     private val mainViewModel: MainViewModel by activityViewModels {
-        TaskViewModelFactory(TaskRepository((activity?.application as App).database.taskDao()),
+        MainViewModelFactory(TaskRepository((activity?.application as App).database.taskDao()),
             CategoryRepository((activity?.application as App).database.categoryDao()))
     }
 

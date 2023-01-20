@@ -13,8 +13,8 @@ fun timeStampToDate(timeStamp: Long): String {
     return dateTime.format(formatter)
 }
 
-fun dueDateString(timeStamp: Long): String? {
-    if (timeStamp == 0L) return null
+fun dueDateString(timeStamp: Long): String {
+    if (timeStamp == 0L) return ""
 
     val today = LocalDate.now()
     val dueDate = LocalDate.ofEpochDay(timeStamp)
